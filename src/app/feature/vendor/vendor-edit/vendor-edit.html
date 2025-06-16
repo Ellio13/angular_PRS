@@ -1,1 +1,50 @@
 <p>vendor-edit works!</p>
+
+<div class="p-4">
+  <span class="component-title">{{ title }}</span>
+  <p *ngIf="!vendor">Loading...</p>
+  <div *ngIf="vendor">
+    <main class="single">
+      <table class="table table-sm">
+        <tr>
+          <td>code:</td>
+          <td>
+            <input [(ngModel)]="vendor.code" class="rounded" type="text" />
+          </td>
+
+          <td>name:</td>
+          <td>
+            <input [(ngModel)]="vendor.name" class="rounded" type="text" />
+          </td>
+        </tr>
+        <tr>
+          <td>address:</td>
+          <td>
+            <input [(ngModel)]="vendor.address" class="rounded" type="text" />
+          </td>
+          <td>city</td>
+          <td>
+            <input [(ngModel)]="vendor.city" class="rounded" type="text" />
+          </td>
+        </tr>
+        <tr>
+          <td>phone:</td>
+          <td>
+            <input [(ngModel)]="vendor.phoneNumber" class="rounded" type="text" />
+          </td>
+        </tr>
+        <tr>
+          <td>email:</td>
+          <td>
+            <input [(ngModel)]="vendor.email" type="text" />
+          </td>
+        </tr>
+      </table>
+    </main>
+    <span>
+      <button (click)="save()" class="btn btn-sm btn-primary">
+        Save
+      </button>
+    </span>
+  </div>
+</div>
