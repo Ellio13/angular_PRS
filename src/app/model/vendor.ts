@@ -7,7 +7,7 @@ address: string;
 city: string;
 state: string;
 zip: string;
-phoneNumer: string;
+phoneNumber: string;
 email: string
 
 constructor(id: number = 0, 
@@ -28,7 +28,7 @@ constructor(id: number = 0,
     this.city = city;
     this.state = state;
     this.zip = zip;
-    this.phoneNumer = phoneNumber;
+    this.phoneNumber = phoneNumber;
     this.email = email;
 
 }
