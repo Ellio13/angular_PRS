@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { User } from '../../../model/user';
 import { Vendor } from '../../../model/vendor';
-import { UserService } from '../../../service/user-service';
 import { VendorService } from '../../../service/vendor-service';
 
 @Component({
@@ -16,8 +14,7 @@ export class VendorList implements OnInit, OnDestroy {
   subscription!: Subscription;
   vendors: Vendor[] = [];
 
-  constructor(private vendorSvc: VendorService){
-  }
+  constructor(private vendorSvc: VendorService) {}
 
   ngOnInit(): void {
     this.subscription = this.vendorSvc.list().subscribe({
@@ -25,33 +22,33 @@ export class VendorList implements OnInit, OnDestroy {
         this.vendors = resp;
         console.log("vendors", this.vendors);
       },
-      error: (err) => {
+      error: (err: any) => {
         console.log("Error retrieving vendor list", err);
       }
     });
   }
-}
-
-
-
 
   ngOnDestroy(): void {
-   this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
-    delete(id: number) {
-    this.subscription = this.userSvc.delete(id).subscribe({
+  delete(id: number): void {
+    this.subscription = this.vendorSvc.delete(id).subscribe({
       next: () => {
-        // refresh the movie list
-        this.subscription = this.userSvc.list().subscribe((resp) => {
-          this.users = resp;
+        // Refresh the vendor list after delete
+        this.subscription = this.vendorSvc.list().subscribe({
+          next: (resp) => {
+            this.vendors = resp;
+          },
+          error: (err: any) => {
+            console.log("Error refreshing vendor list", err);
+          }
         });
       },
-      error: (err) => {
-        console.log('Error deleting user for id: ' + id);
-        alert('Error deleting user for id: ' + id);
-      },
+      error: (err: any) => {
+        console.log('Error deleting vendor for id: ' + id);
+        alert('Error deleting vendor for id: ' + id);
+      }
     });
   }
-  }
-
+}
