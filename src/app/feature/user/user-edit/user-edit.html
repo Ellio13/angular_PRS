@@ -1,0 +1,68 @@
+<p>user-edit works!</p>
+
+<div class="p-4">
+  <span class="component-title">{{ title }}</span>
+  <p *ngIf="!user">Loading...</p>
+  <div *ngIf="user">
+    <main class="single">
+      <table class="table table-sm">
+        <tr>
+          <td>username:</td>
+          <td>
+            <input [(ngModel)]="user.username" class="rounded" type="text" />
+          </td>
+         
+          <td>password:</td>
+          <td>
+            <input [(ngModel)]="user.password" class="rounded" type="text" />
+          </td>
+        </tr>
+        <tr>
+          <td>first name:</td>
+          <td>
+            <input [(ngModel)]="user.firstName" class="rounded" type="text" />
+          </td>
+          <td>last name:</td>
+          <td>
+            <input [(ngModel)]="user.lastName" class="rounded" type="text" />
+          </td>
+        </tr>
+        <tr>
+          <td>phone:</td>
+          <td>
+            <input [(ngModel)]="user.phoneNumber" class="rounded" type="text" />
+          </td>
+        </tr>
+        <tr>
+          <td>email:</td>
+          <td>
+            <input [(ngModel)]="user.email" type="text" />
+          </td>
+        </tr>
+         <tr>
+          <td>reviewer:</td>
+          <td>
+            <select [(ngModel)]="user.reviewer">
+                <option value="false">false</option>
+                <option value="true">true</option>
+            </select>
+        </td>
+        </tr>
+         <tr>
+          <td>admin:</td>
+          <td>
+            <select [(ngModel)]="user.admin">
+                <option value="false">false</option>
+                <option value="true">true</option>
+            </select>
+          </td>
+        </tr>
+      </table>
+    </main>
+    <span>
+      <button (click)="save()" class="btn btn-sm btn-primary">
+        Save
+      </button>
+    </span>
+  </div>
+</div>

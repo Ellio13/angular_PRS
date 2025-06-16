@@ -1,0 +1,58 @@
+<p>user-create works!</p>
+<div class="p-4">
+  <h1>{{ title }}</h1>
+  <table>
+    <tr>
+      <td>username:</td>
+      <td>
+        <input [(ngModel)]="newUser.username" type="text" />
+      </td>
+    </tr>
+    <tr>
+      <td>password:</td>
+      <td>
+        <input [(ngModel)]="newUser.password" type="text" />
+      </td>
+    </tr>
+    
+    <tr>
+      <td>First name:</td>
+      <td>
+        <input [(ngModel)]="newUser.firstName" type="text" />
+      </td>
+    </tr>
+        <tr>
+      <td>Last name:</td>
+      <td>
+        <input [(ngModel)]="newUser.lastName" type="text" />
+      </td>
+    </tr>
+    <tr>
+      <td>Phone number:</td>
+      <td>
+        <input [(ngModel)]="newUser.phoneNumber" type="number" />
+      </td>
+    </tr>
+      <tr>
+      <td>Email:</td>
+      <td>
+        <input [(ngModel)]="newUser.email" type="email" />
+      </td>
+    </tr>
+    <tr>
+      <td>Reviewer:</td>
+    </tr>
+    <tr>
+      <td>
+        <input [(ngModel)]="newUser.reviewer" type="checkbox" />
+      </td>
+    </tr>
+      <tr>
+      <td>Admin:</td>
+      <td>
+        <input [(ngModel)]="newUser.admin" type="checkbox" />
+      </td>
+    </tr>
+  </table>
+  <button (click)="addUser()">Add User</button>
+</div>
