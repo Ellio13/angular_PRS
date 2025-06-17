@@ -1,1 +1,81 @@
 <p>request-list works!</p>
+
+
+<div class="p-4">
+<section class="heading">
+  <span class="page-title font-weight-bold font-italic">{{ title }}</span>
+  <a routerLink="/request-create">
+    <img width="20" height="20" src="add-icon.png" title="Add New"/>
+  </a>
+</section>
+  <table *ngIf="requests" class="table table-striped table-hover">
+    <thead>
+      <th>Id</th>
+      <th>User</th>
+      <th>Request Number</th>
+      <th>Description</th>
+      <th>Justification</th>
+      <th>Date Needed</th>
+      <th>Delivery Mode</th>
+      <th>Status</th>
+      <th>Total</th>
+      <th>Submitted Date</th>
+      <th>Reason for Rejection</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of requests">
+        <td>{{ r.id }}</td>
+        <td>{{ r.user.username }}</td>
+        <td>{{ r.requestNumber }}</td>
+        <td>{{ r.description }}</td>
+        <td>{{ r.justification }}</td>
+        <td>{{ r.dateNeeded }}</td>
+        <td>{{ r.deliveryMode }}</td>
+        <td>{{ r.status }}</td>
+        <td>{{ r.total }}</td>
+        <td>{{ r.submittedDate }}</td>
+        <td>{{ r.reasonForRejection }}</td>
+        <td>
+          <a routerLink="/request-edit/{{r.id}}">
+            <img
+              src="/pencil-icon.png"
+              width="20"
+              height="20"
+              title="Edit Request"
+          /></a>
+          |
+          <a routerLink="/request-detail/{{r.id}}">
+            <img
+              src="/details.png"
+              width="20"
+              height="20"
+              title="Request Details"
+            />
+          </a>
+          |
+          <a>
+            <img
+              src="/delete.jpg"
+              width="20"
+              height="20"
+              title="Delete Request"
+              (click)="delete(r.id)"
+            />
+          </a>
+          |
+         <!-- 
+         this is necessary for line items, but not for users 
+         <a>
+            <img
+              src="/lines.png"
+              width="20"
+              height="20"
+              title="Details"
+            />
+          </a> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+ 

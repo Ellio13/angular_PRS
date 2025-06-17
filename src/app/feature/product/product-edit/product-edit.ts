@@ -15,8 +15,6 @@ export class ProductEdit implements OnInit, OnDestroy {
   subscription!: Subscription;
   product!: Product;
   productId!: number;
-user: any;
-vendor: any;
 
   constructor(
     private productSvc: ProductService,
@@ -42,15 +40,29 @@ vendor: any;
     this.subscription.unsubscribe();
   }
 
-  save() {
-    this.productSvc.update(this.product).subscribe({
-      next: (resp) => {
-        this.product = resp;
-        this.router.navigateByUrl('/product-list');
-      },
-      error: (err) => {
-        console.log('error saving product', err);
-      }
-    });
-  }
+save() {
+  // Transform to the structure your backend expects
+  const productToSave = {
+    id: this.product.id,
+    name: this.product.name,
+    vendorId: this.product.vendor.id,  // Extract just the vendor ID
+    partNumber: this.product.partNumber,
+    price: this.product.price,
+    unit: this.product.unit,
+    photoPath: this.product.photoPath
+  };
+
+  console.log('Sending to backend:', productToSave);
+  
+  this.productSvc.update(productToSave as any).subscribe({
+    next: (resp) => {
+      console.log('Save successful:', resp);
+      this.router.navigateByUrl('/product-list');
+    },
+    error: (err) => {
+      console.log('Error saving product:', err);
+      console.log('Error details:', err.error);
+    }
+  });
+}
 }

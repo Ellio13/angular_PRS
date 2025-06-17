@@ -1,1 +1,44 @@
-<p>product-create works!</p>
+
+<div class="p-4">
+  <h1>{{ title }}</h1>
+  <table>
+    <tr>
+      <td>Vendor ID:</td>
+      <td>
+        <input [(ngModel)]="newProduct.vendorId" type="text" />
+      </td>
+    </tr>
+    <tr>
+      <td>Part Number:</td>
+      <td>
+        <input [(ngModel)]="newProduct.partNumber" type="text" />
+      </td>
+    </tr>
+    
+    <tr>
+      <td>Name:</td>
+      <td>
+        <input [(ngModel)]="newProduct.name" type="text" />
+      </td>
+    </tr>
+        <tr>
+      <td>Price:</td>
+      <td>
+        <input [(ngModel)]="newProduct.price" type="text" />
+      </td>
+    </tr>
+    <tr>
+      <td>Unit:</td>
+      <td>
+        <input [(ngModel)]="newProduct.unit" type="text" />
+      </td>
+    </tr>
+      <tr>
+      <td>Photo:</td>
+      <td>
+        <input [(ngModel)]="newProduct.photoPath" type="text" />
+      </td>
+    </tr>
+  </table>
+  <button (click)="addProduct()">Add Product</button>
+</div>

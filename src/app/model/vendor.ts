@@ -9,6 +9,7 @@ state: string;
 zip: string;
 phoneNumber: string;
 email: string
+vendorId: any;
 
 constructor(id: number = 0, 
    code: string ='',
