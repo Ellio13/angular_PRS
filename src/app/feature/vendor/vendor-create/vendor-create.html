@@ -1,1 +1,58 @@
 <p>vendor-create works!</p>
+<p>user-create works!</p>
+<div class="p-4">
+  <h1>{{ title }}</h1>
+  <table>
+    <tr>
+      <td>code:</td>
+      <td>
+        <input [(ngModel)]="newVendor.code" type="text" />
+      </td>
+    </tr>
+    <tr>
+      <td>name:</td>
+      <td>
+        <input [(ngModel)]="newVendor.name" type="text" />
+      </td>
+    </tr>
+    
+    <tr>
+      <td>address:</td>
+      <td>
+        <input [(ngModel)]="newVendor.address" type="text" />
+      </td>
+    </tr>
+    <tr>
+      <td>city</td>
+      <td>
+        <input [(ngModel)]="newVendor.city" type="text" />
+      </td>
+    </tr>
+    <tr>
+      <td>state:</td>
+      <td>
+        <input [(ngModel)]="newVendor.state" type="text" />
+      </td>
+    </tr>
+        <tr>
+      <td>zip:</td>
+      <td>
+        <input [(ngModel)]="newVendor.zip" type="text" />
+      </td>
+    </tr>
+        <tr>
+      <td>phone:</td>
+      <td>
+        <input [(ngModel)]="newVendor.phoneNumber" type="text" />
+      </td>
+    </tr>
+      <tr>
+      <td>Email:</td>
+      <td>
+        <input [(ngModel)]="newVendor.email" type="email" />
+      </td>
+    </tr>
+ 
+  </table>
+  <button (click)="addVendor()">Add Vendor</button>
+</div>

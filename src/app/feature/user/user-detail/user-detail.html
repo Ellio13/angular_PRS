@@ -1,1 +1,115 @@
-<p>user-detail works!</p>
+
+<div *ngIf="user" class="component">
+  <section class="heading">
+    <span class="page-title font-weight-bold font-italic">{{ title }}</span>
+    <span> | <a routerLink="/user-list">Return to List</a></span>
+  </section>
+  <main class="single">
+    <table class="table table-sm">
+      <tr>
+        <td>ID</td>
+        <td>{{ user.id }}</td>
+      </tr>
+      <tr>
+        <td>username:</td>
+        <td>
+          <input
+            [(ngModel)]="user.username"
+            class="rounded"
+            type="text"
+            disabled
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>password</td>
+        <td>
+          <input
+            [(ngModel)]="user.password"
+            class="rounded"
+            type="text"
+            disabled
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>first name</td>
+        <td>
+          <input
+            [(ngModel)]="user.firstName"
+            class="rounded"
+            type="text"
+            disabled
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>last name:</td>
+        <td>
+          <input
+            [(ngModel)]="user.lastName"
+            class="rounded"
+            type="text"
+            disabled
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>phone number</td>
+        <td>
+          <input
+            [(ngModel)]="user.phoneNumber"
+            class="rounded"
+            type="text"
+            disabled
+          />
+        </td>
+      </tr>
+        <tr>
+            <td>email</td>
+            <td>
+            <input
+                [(ngModel)]="user.email"
+                class="rounded"
+                type="text"
+                disabled
+            />
+            </td>
+        </tr>
+        <tr>
+            <td>reviewer:</td>
+            <td>
+            <input
+                [(ngModel)]="user.reviewer"
+                class="rounded"
+                type="text"
+                disabled
+            />
+            </td>
+        </tr>
+        <tr>
+            <td>admin:</td>
+            <td>
+            <input
+                [(ngModel)]="user.admin"
+                class="rounded"
+                type="text"
+                disabled
+            />
+            </td>
+        </tr>
+    </table>
+      </main>
+  <div class="mt-3">
+    <a routerLink="/user-edit/{{ user.id }}" class="btn btn-sm btn-warning">
+      Edit
+    </a>
+    <span> | </span>
+    <a routerLink="/user-list" class="btn btn-sm btn-secondary">
+      Back to List
+    </a>
+    <span> | </span>
+  <button (click)="delete()" class="btn btn-sm btn-danger">
+    Delete
+  </button>
+</div>

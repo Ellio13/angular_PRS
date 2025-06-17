@@ -8,7 +8,6 @@ phoneNumber: string;
 email: string;
 reviewer: boolean;
 admin: boolean;
-birthDate: any;
 
 constructor(id: number = 0, 
     username: string ='',
