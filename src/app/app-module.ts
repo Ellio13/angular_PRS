@@ -25,6 +25,7 @@ import { RequestCreate } from './feature/request/request-create/request-create';
 import { RequestList } from './feature/request/request-list/request-list';
 import { RequestEdit } from './feature/request/request-edit/request-edit';
 import { RequestDetail } from './feature/request/request-detail/request-detail';
+import { RequestLines } from './feature/request/request-lines/request-lines';
 //line item
 import { LineItemCreate } from './feature/line-item/line-item-create/line-item-create';
 import { LineItemList } from './feature/line-item/line-item-list/line-item-list';
@@ -59,11 +60,13 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
     RequestList,
     RequestEdit,
     RequestDetail,
+    
     //line item
     LineItemCreate,
     LineItemList,
     LineItemEdit,
     LineItemDetail,
+  
   ],
   imports: [
     BrowserModule,

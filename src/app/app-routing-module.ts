@@ -20,6 +20,7 @@ import { RequestList } from './feature/request/request-list/request-list';
 import { RequestCreate } from './feature/request/request-create/request-create';
 import { RequestDetail } from './feature/request/request-detail/request-detail';
 import { RequestEdit } from './feature/request/request-edit/request-edit';
+import { RequestLines } from './feature/request/request-lines/request-lines';
 //import line item CRUD
 import { LineItemList } from './feature/line-item/line-item-list/line-item-list';
 import { LineItemCreate } from './feature/line-item/line-item-create/line-item-create';
@@ -51,6 +52,7 @@ const routes: Routes = [
   {path: 'request-create', component: RequestCreate},
   {path: 'request-edit/:id', component: RequestEdit},
   {path: 'request-detail/:id', component: RequestDetail},
+  {path: 'request-lines/:id', component: RequestLines},
   // LineItem routes
   {path: 'line-item-list', component: LineItemList},
   {path: 'line-item-create', component: LineItemCreate},

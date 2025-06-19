@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from '../../../model/product';
+import { Vendor }  from '../../../model/vendor';      // ← add
+import { VendorService } from '../../../service/vendor-service'; // ← add
 import { ProductService } from '../../../service/product-service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LineItem } from '../../../model/line-item';
 
 @Component({
   selector: 'app-product-edit',
@@ -12,58 +13,54 @@ import { LineItem } from '../../../model/line-item';
   styleUrl: './product-edit.css'
 })
 export class ProductEdit implements OnInit, OnDestroy {
-  title: string = "Product-Edit";
+
+  title = 'Product-Edit';
   subscription!: Subscription;
   product!: Product;
   productId!: number;
+  //dropdown to prevent errors
+  vendors: Vendor[] = [];
 
   constructor(
     private productSvc: ProductService,
+    private vendorSvc:  VendorService,        // ← inject
     private router: Router,
     private actRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.actRoute.params.subscribe((parms)=>{
-      this.productId = parms['id'];
-      this.subscription = this.productSvc.getById(this.productId).subscribe({
-      next: (resp) => {
-          this.product = resp;
-      },
-      error: (err) => {
-        console.log("Error retrieving product for id: " +this.productId, err);
-      }
-    });
-  })
-}
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    /* 1. load vendors for the dropdown */
+    this.vendorSvc.list().subscribe(vs => this.vendors = vs);
+
+    /* 2. load the product being edited */
+    this.actRoute.params.subscribe(p => {
+      this.productId = +p['id'];
+      this.subscription = this.productSvc.getById(this.productId).subscribe({
+        next: resp => this.product = resp,
+        error: err => console.log('Error retrieving product', err)
+      });
+    });
   }
 
-save() {
-  // Transform to the structure your backend expects
-  const productToSave = {
-    id: this.product.id,
-    name: this.product.name,
-    vendorId: this.product.vendor.id,  // Extract just the vendor ID
-    partNumber: this.product.partNumber,
-    price: this.product.price,
-    unit: this.product.unit,
-    photoPath: this.product.photoPath
-  };
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
 
-  console.log('Sending to backend:', productToSave);
-  
-  this.productSvc.update(productToSave as any).subscribe({
-    next: (resp) => {
-      console.log('Save successful:', resp);
-      this.router.navigateByUrl('/product-list');
-    },
-    error: (err) => {
-      console.log('Error saving product:', err);
-      console.log('Error details:', err.error);
-    }
-  });
-}
+  save(): void {
+    const dto = {
+      id:         this.product.id,
+      name:       this.product.name,
+      vendorId:   this.product.vendorId,
+      partNumber: this.product.partNumber,
+      price:      this.product.price,
+      unit:       this.product.unit,
+      photoPath:  this.product.photoPath
+    };
+
+    this.productSvc.update(dto as any).subscribe({
+      next: () => this.router.navigateByUrl('/product-list'),
+      error: err => console.log('Error saving product', err)
+    });
+  }
 }

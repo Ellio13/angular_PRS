@@ -1,44 +1,50 @@
+<p>{{ title }}</p>
 
-<div class="p-4">
-  <h1>{{ title }}</h1>
-  <table>
-    <tr>
-      <td>Vendor ID:</td>
-      <td>
-        <input [(ngModel)]="newProduct.vendorId" type="text" />
-      </td>
-    </tr>
-    <tr>
-      <td>Part Number:</td>
-      <td>
-        <input [(ngModel)]="newProduct.partNumber" type="text" />
-      </td>
-    </tr>
-    
-    <tr>
-      <td>Name:</td>
-      <td>
-        <input [(ngModel)]="newProduct.name" type="text" />
-      </td>
-    </tr>
-        <tr>
-      <td>Price:</td>
-      <td>
-        <input [(ngModel)]="newProduct.price" type="text" />
-      </td>
-    </tr>
-    <tr>
-      <td>Unit:</td>
-      <td>
-        <input [(ngModel)]="newProduct.unit" type="text" />
-      </td>
-    </tr>
-      <tr>
-      <td>Photo:</td>
-      <td>
-        <input [(ngModel)]="newProduct.photoPath" type="text" />
-      </td>
-    </tr>
-  </table>
-  <button (click)="addProduct()">Add Product</button>
-</div>
+<table>
+  <!-- Vendor dropdown -->
+  <tr>
+    <td>Vendor:</td>
+    <td>
+      <select [(ngModel)]="newProduct.vendorId" class="rounded">
+        <option *ngFor="let v of vendors" [value]="v.id">
+          {{ v.id }} – {{ v.name }}
+        </option>
+      </select>
+    </td>
+  </tr>
+
+  <!-- Part Number -->
+  <tr>
+    <td>Part Number:</td>
+    <td>
+      <input [(ngModel)]="newProduct.partNumber" type="text" />
+    </td>
+  </tr>
+
+  <!-- Name -->
+  <tr>
+    <td>Name:</td>
+    <td>
+      <input [(ngModel)]="newProduct.name" type="text" />
+    </td>
+  </tr>
+
+  <!-- Price -->
+  <tr>
+    <td>Price:</td>
+    <td>
+      <input [(ngModel)]="newProduct.price" type="number" step="0.01" />
+    </td>
+  </tr>
+
+  <!-- Unit -->
+  <tr>
+    <td>Unit:</td>
+    <td>
+      <input [(ngModel)]="newProduct.unit" type="text" />
+    </td>
+  </tr>
+</table>
+
+<button (click)="addProduct()">Add Product</button>
+<button routerLink="/product-list">Cancel</button>

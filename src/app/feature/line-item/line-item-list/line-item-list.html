@@ -16,8 +16,8 @@
     <tbody>
      <tr *ngFor="let li of lineItems">
   <td>{{ li.id }}</td>
-  <td>{{ li.request.id }}</td>
-  <td>{{ li.product.id }}</td>
+  <td>{{ li.request?.id }}</td>
+  <td>{{ li.product?.id }}</td>
   <td>{{ li.quantity }}</td>
   <td>
     <a routerLink="/line-item-edit/{{li.id}}">

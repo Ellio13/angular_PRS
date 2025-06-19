@@ -6,10 +6,16 @@
     <main class="single">
       <table class="table table-sm">
         <tr>
-          <td>Vendor Id:</td>
-          <td>
-            <input [(ngModel)]="product.vendor.id" class="rounded" type="text" />
-          </td>
+         <td>Vendor:</td>
+<td>
+  <!-- bind the whole vendor object -->
+  <select [(ngModel)]="product.vendor" class="rounded">
+    <option *ngFor="let v of vendors" [ngValue]="v">
+      {{ v.id }} – {{ v.name }}
+    </option>
+  </select>
+</td>
+
 
           <td>Part Number:</td>
           <td>

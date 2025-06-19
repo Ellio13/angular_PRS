@@ -1,1 +1,32 @@
-<p>line-item-edit works!</p>
+
+<p>{{ title }}</p>
+
+<table>
+  <tr>
+    <td>Request:</td>
+    <td>
+      <select [(ngModel)]="lineItem.requestId">
+        <option *ngFor="let r of requests" [ngValue]="r.id">{{ r.id }}</option>
+      </select>
+    </td>
+  </tr>
+
+  <tr>
+    <td>Product:</td>
+    <td>
+      <select [(ngModel)]="lineItem.productId">
+        <option *ngFor="let p of products" [ngValue]="p.id">{{ p.id }}</option>
+      </select>
+    </td>
+  </tr>
+
+  <tr>
+    <td>Quantity:</td>
+    <td>
+      <input type="number" [(ngModel)]="lineItem.quantity" />
+    </td>
+  </tr>
+</table>
+
+<button (click)="save()">Save Changes</button>
+<button routerLink="/line-item-list">Cancel</button>

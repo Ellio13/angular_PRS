@@ -1,24 +1,35 @@
-<div class="p-4">
-  <h1>{{ title }}</h1>
-  <table>
-    <tr>
-      <td>Request ID:</td>
-      <td>
-        <input [(ngModel)]="lineItem.request.id" type="number" />
-      </td>
-    </tr>
-    <tr>
-      <td>Product ID:</td>
-      <td>
-        <input [(ngModel)]="lineItem.product.id" type="number" />
-      </td>
-    </tr>
-    <tr>
-      <td>Quantity:</td>
-      <td>
-        <input [(ngModel)]="lineItem.quantity" type="number" />
-      </td>
-    </tr>
-  </table>
-  <button (click)="save()">Add Line Item</button>
-</div>
+
+<p>{{ title }}</p>
+
+<table>
+  <!-- ▼ ADD: request dropdown -->
+  <tr>
+    <td>Request:</td>
+    <td>
+      <select [(ngModel)]="lineItem.requestId">
+        <option *ngFor="let r of requests" [value]="r.id">{{ r.id }}</option>
+      </select>
+    </td>
+  </tr>
+
+  <!-- ▼ ADD: product dropdown -->
+  <tr>
+    <td>Product:</td>
+    <td>
+      <select [(ngModel)]="lineItem.productId">
+        <option *ngFor="let p of products" [value]="p.id">{{ p.id }}</option>
+      </select>
+    </td>
+  </tr>
+
+  <!-- quantity (unchanged) -->
+  <tr>
+    <td>Quantity:</td>
+    <td>
+      <input type="number" [(ngModel)]="lineItem.quantity" />
+    </td>
+  </tr>
+</table>
+
+<button (click)="save()">Add Line Item</button>
+<button routerLink="/line-item-list">Cancel</button>

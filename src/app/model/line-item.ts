@@ -3,18 +3,21 @@ import { Request } from "./request";
 
 export class LineItem {
     id: number;
-    request: Request;
-    product: Product;
+    requestId: number;
+    productId: number;
     quantity: number;
 
+    request?: Request;
+    product?: Product;
+
     constructor(id: number =0,
-        request: Request = new Request(),
-        product: Product = new Product(),
+        requestId: number = 0,
+        productId: number = 0,
         quantity: number = 0) {
 
             this.id = id;
-            this.request = request;
-            this.product = product;
+            this.requestId = requestId;
+            this.productId = productId;
             this.quantity = quantity;
         }
     }

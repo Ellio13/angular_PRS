@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { LineItem } from "../model/line-item";
 import { LineItemDTO } from "../model/line-item-dto";
 
-const URL = "http://localhost:8080/api/lineitems/";
+const URL = "http://localhost:8080/api/lineitems";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class LineItemService {
   constructor(private http: HttpClient) {}
 
   list(): Observable<LineItem[]> {
-    return this.http.get<LineItem[]>(URL);
+    return this.http.get<LineItem[]>(URL + '/');
   }
 
   delete(id: number): Observable<LineItem> {
@@ -26,7 +26,13 @@ export class LineItemService {
     }
 
 add(dto: LineItemDTO): Observable<LineItem> {
-  return this.http.post<LineItem>("http://localhost:8080/api/lineitems", dto);
+  return this.http.post<LineItem>(URL, dto);
 }
 
+update(id: number, dto: LineItemDTO): Observable<LineItem> {
+  return this.http.put<LineItem>(URL + '/' + id, dto);
+}
+linesForRequest(requestId: number): Observable<LineItem[]> {
+  return this.http.get<LineItem[]>(URL + '/request/' + requestId);
+}
 }

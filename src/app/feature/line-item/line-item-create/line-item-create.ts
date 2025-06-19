@@ -7,6 +7,7 @@ import { LineItemService } from '../../../service/line-item-service';
 import { ProductService } from '../../../service/product-service';
 import { RequestService } from '../../../service/request-service';
 import { Router } from '@angular/router';
+import { LineItemDTO } from '../../../model/line-item-dto';
 
 @Component({
   selector: 'app-line-item-create',
@@ -47,11 +48,14 @@ export class LineItemCreate implements OnInit, OnDestroy {
   }
 
   save(): void {
-    const dto = {
-      requestId: this.lineItem.request.id,
-      productId: this.lineItem.product.id,
+    const dto: LineItemDTO = {
+      requestId: this.lineItem.requestId,
+      productId: this.lineItem.productId,
       quantity: this.lineItem.quantity
     }
+
+    console.log('Creating line item:', dto);
+    
     this.lineItemSvc.add(dto).subscribe({
       next: (resp) => {
         console.log('Line item created:', resp);
