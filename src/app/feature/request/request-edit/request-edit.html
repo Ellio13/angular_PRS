@@ -1,1 +1,46 @@
 <p>request-edit works!</p>
+
+<div class="p-4">
+  <span class="component-title">{{ title }}</span>
+  <p *ngIf="!request">Loading...</p>
+  <div *ngIf="request">
+    <main class="single">
+      <table class="table table-sm">
+        <tr>
+          <td>User Id:</td>
+          <td>
+            <input [(ngModel)]="request.user.id" class="rounded" type="text" />
+          </td>
+
+          <td>Description</td>
+          <td>
+            <input [(ngModel)]="request.description" class="rounded" type="text" />
+          </td>
+        </tr>
+        <tr>
+          <td>Justification</td>
+          <td>
+            <input [(ngModel)]="request.justification" class="rounded" type="text" />
+          </td>
+            <td>Date Needed:</td>
+          <td>
+            <input [(ngModel)]="request.dateNeeded" class="rounded" type="date" />
+          </td>
+          
+       <td>Delivery Mode:</td>
+  <td>
+    <select [(ngModel)]="request.deliveryMode" class="form-control">
+      <option value="">Select Delivery Mode</option>
+      <option value="mail">Mail</option>
+      <option value="pickup">Pickup</option>
+    </select>
+  </td>
+      </table>
+    </main>
+    <span>
+      <button (click)="save()" class="btn btn-sm btn-primary">
+        Save
+      </button>
+    </span>
+  </div>
+</div>

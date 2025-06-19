@@ -1,4 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { LineItem } from '../../../model/line-item';
+import { Product } from '../../../model/product';
+import { Request } from '../../../model/request';
+import { LineItemService } from '../../../service/line-item-service';
+import { ProductService } from '../../../service/product-service';
+import { RequestService } from '../../../service/request-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-line-item-create',
@@ -6,6 +14,53 @@ import { Component } from '@angular/core';
   templateUrl: './line-item-create.html',
   styleUrl: './line-item-create.css'
 })
-export class LineItemCreate {
+export class LineItemCreate implements OnInit, OnDestroy {
+  title: string = 'Create Line Item';
+  subscription!: Subscription;
+  lineItem: LineItem = new LineItem();
+  products: Product[] = [];
+  requests: Request[] = [];
 
+  constructor(
+    private lineItemSvc: LineItemService,
+    private productSvc: ProductService,
+    private requestSvc: RequestService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.subscription = this.productSvc.list().subscribe({
+      next: (resp) => this.products = resp,
+      error: (err) => console.log('Error retrieving products', err)
+    });
+
+    this.subscription = this.requestSvc.list().subscribe({
+      next: (resp) => this.requests = resp,
+      error: (err) => console.log('Error retrieving requests', err)
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  save(): void {
+    const dto = {
+      requestId: this.lineItem.request.id,
+      productId: this.lineItem.product.id,
+      quantity: this.lineItem.quantity
+    }
+    this.lineItemSvc.add(dto).subscribe({
+      next: (resp) => {
+        console.log('Line item created:', resp);
+        this.router.navigateByUrl('/line-item-list');
+      },
+      error: (err) => {
+        console.log('Error creating line item', err);
+        alert('Error creating line item');
+      }
+    });
+  }
 }

@@ -1,1 +1,44 @@
 <p>request-create works!</p>
+<p>user-create works!</p>
+<div class="p-4">
+  <h1>{{ title }}</h1>
+  <table>
+    <tr>
+      <td>User ID:</td>
+      <td>
+        <input [(ngModel)]="newRequest.user.id" type="text" />
+      </td>
+    </tr>
+    <tr>
+      <td>Description</td>
+      <td>
+        <input [(ngModel)]="newRequest.description" type="text" />
+      </td>
+    </tr>
+    
+    <tr>
+      <td>Justification:</td>
+      <td>
+        <input [(ngModel)]="newRequest.justification" type="text" />
+      </td>
+    </tr>
+        <tr>
+      <td>Date Needed:</td>
+      <td>
+        <input [(ngModel)]="newRequest.dateNeeded" type="date" />
+      </td>
+    </tr>
+ <tr>
+  <td>Delivery Mode:</td>
+  <td>
+    <select [(ngModel)]="newRequest.deliveryMode" class="form-control">
+      <option value="">Select Delivery Mode</option>
+      <option value="mail">Mail</option>
+      <option value="pickup">Pickup</option>
+    </select>
+  </td>
+</tr>
+    
+  </table>
+  <button (click)="addRequest()">Add Request</button>
+</div>

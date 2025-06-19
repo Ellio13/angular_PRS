@@ -1,1 +1,24 @@
-<p>line-item-create works!</p>
+<div class="p-4">
+  <h1>{{ title }}</h1>
+  <table>
+    <tr>
+      <td>Request ID:</td>
+      <td>
+        <input [(ngModel)]="lineItem.request.id" type="number" />
+      </td>
+    </tr>
+    <tr>
+      <td>Product ID:</td>
+      <td>
+        <input [(ngModel)]="lineItem.product.id" type="number" />
+      </td>
+    </tr>
+    <tr>
+      <td>Quantity:</td>
+      <td>
+        <input [(ngModel)]="lineItem.quantity" type="number" />
+      </td>
+    </tr>
+  </table>
+  <button (click)="save()">Add Line Item</button>
+</div>

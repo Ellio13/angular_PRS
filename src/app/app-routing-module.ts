@@ -20,6 +20,12 @@ import { RequestList } from './feature/request/request-list/request-list';
 import { RequestCreate } from './feature/request/request-create/request-create';
 import { RequestDetail } from './feature/request/request-detail/request-detail';
 import { RequestEdit } from './feature/request/request-edit/request-edit';
+//import line item CRUD
+import { LineItemList } from './feature/line-item/line-item-list/line-item-list';
+import { LineItemCreate } from './feature/line-item/line-item-create/line-item-create';
+import { LineItemEdit } from './feature/line-item/line-item-edit/line-item-edit';
+import { LineItemDetail } from './feature/line-item/line-item-detail/line-item-detail';
+//import not-found component
 
 import { NotFound } from './core/not-found/not-found';
 
@@ -45,6 +51,11 @@ const routes: Routes = [
   {path: 'request-create', component: RequestCreate},
   {path: 'request-edit/:id', component: RequestEdit},
   {path: 'request-detail/:id', component: RequestDetail},
+  // LineItem routes
+  {path: 'line-item-list', component: LineItemList},
+  {path: 'line-item-create', component: LineItemCreate},
+  {path: 'line-item-edit/:id', component: LineItemEdit},
+  {path: 'line-item-detail/:id', component: LineItemDetail},
   {path: '**', component: NotFound}
 ];
 

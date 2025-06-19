@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Product } from '../../../model/product';
 import { ProductService } from '../../../service/product-service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LineItem } from '../../../model/line-item';
 
 @Component({
   selector: 'app-product-edit',
