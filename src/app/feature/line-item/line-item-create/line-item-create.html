@@ -4,13 +4,14 @@
 <table>
   <!-- ▼ ADD: request dropdown -->
   <tr>
-    <td>Request:</td>
-    <td>
-      <select [(ngModel)]="lineItem.requestId">
-        <option *ngFor="let r of requests" [value]="r.id">{{ r.id }}</option>
-      </select>
-    </td>
-  </tr>
+  <label for="request">Request:</label>
+<select id="request"
+        [(ngModel)]="lineItem.requestId"
+        [disabled]="requestLocked"
+        class="form-select">
+  <option *ngFor="let r of requests" [value]="r.id">{{ r.id }}</option>
+</select>
+</tr>
 
   <!-- ▼ ADD: product dropdown -->
   <tr>

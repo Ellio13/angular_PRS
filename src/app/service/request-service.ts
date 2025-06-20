@@ -1,5 +1,3 @@
-
-
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
@@ -18,6 +16,10 @@ export class RequestService {
     return this.http.get<Request[]>(URL);
   }
 
+  listByStatusAndRole(status: string, role: string): Observable<Request[]> {
+    return this.http.get<Request[]>(`${URL}?status=${status}&role=${role}`);
+  }
+
   add(request: Request): Observable<Request> {
     return this.http.post<Request>(URL, request);
   }
@@ -33,5 +35,17 @@ export class RequestService {
   delete(id: number): Observable<Request> {
     return this.http.delete<Request>(URL + '/' + id);
   }
+
+  approveRequest(id: number): Observable<Request> {
+    return this.http.put<Request>(`${URL}/approve/${id}`, {});
+  }
+
+  rejectRequest(id: number, reason: string): Observable<Request> {
+    return this.http.put<Request>(`${URL}/reject/${id}`, { reason });
+  }
+ 
+submitForReview(id: number): Observable<Request> {
+  return this.http.put<Request>(`${URL}/submit-review/${id}`, null);
 }
 
+}

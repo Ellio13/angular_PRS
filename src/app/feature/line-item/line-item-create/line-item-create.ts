@@ -6,7 +6,7 @@ import { Request } from '../../../model/request';
 import { LineItemService } from '../../../service/line-item-service';
 import { ProductService } from '../../../service/product-service';
 import { RequestService } from '../../../service/request-service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { LineItemDTO } from '../../../model/line-item-dto';
 
 @Component({
@@ -21,15 +21,24 @@ export class LineItemCreate implements OnInit, OnDestroy {
   lineItem: LineItem = new LineItem();
   products: Product[] = [];
   requests: Request[] = [];
+  requestLocked: boolean = false;
 
   constructor(
     private lineItemSvc: LineItemService,
     private productSvc: ProductService,
     private requestSvc: RequestService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    // Check if request ID was passed in URL
+    const requestIdParam = this.route.snapshot.queryParamMap.get('r');
+    if (requestIdParam) {
+      this.lineItem.requestId = +requestIdParam;
+      this.requestLocked = true;
+    }
+
     this.subscription = this.productSvc.list().subscribe({
       next: (resp) => this.products = resp,
       error: (err) => console.log('Error retrieving products', err)
@@ -52,14 +61,25 @@ export class LineItemCreate implements OnInit, OnDestroy {
       requestId: this.lineItem.requestId,
       productId: this.lineItem.productId,
       quantity: this.lineItem.quantity
-    }
+    };
 
     console.log('Creating line item:', dto);
-    
+
     this.lineItemSvc.add(dto).subscribe({
       next: (resp) => {
         console.log('Line item created:', resp);
-        this.router.navigateByUrl('/line-item-list');
+
+        // 🔁 Submit the request for review after line item is saved
+        this.requestSvc.submitForReview(dto.requestId).subscribe({
+          next: (reviewedRequest) => {
+            console.log('Request submitted for review:', reviewedRequest);
+            this.router.navigate(['/request-lines', dto.requestId]);
+          },
+          error: (err) => {
+            console.error('Failed to submit request for review', err);
+            this.router.navigate(['/request-lines', dto.requestId]); // still redirect even if review fails
+          }
+        });
       },
       error: (err) => {
         console.log('Error creating line item', err);

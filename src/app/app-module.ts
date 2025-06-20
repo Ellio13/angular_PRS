@@ -1,6 +1,8 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Menu } from './core/menu/menu';
@@ -10,6 +12,8 @@ import { UserCreate } from './feature/user/user-create/user-create';
 import { UserList } from './feature/user/user-list/user-list';
 import { UserDetail } from './feature/user/user-detail/user-detail';
 import { UserEdit } from './feature/user/user-edit/user-edit';
+import { UserLogin } from './feature/user/login/login';
+import { AuthService } from './service/auth-service';
 //vendor
 import { VendorCreate } from './feature/vendor/vendor-create/vendor-create';
 import { VendorList } from './feature/vendor/vendor-list/vendor-list';
@@ -25,15 +29,12 @@ import { RequestCreate } from './feature/request/request-create/request-create';
 import { RequestList } from './feature/request/request-list/request-list';
 import { RequestEdit } from './feature/request/request-edit/request-edit';
 import { RequestDetail } from './feature/request/request-detail/request-detail';
-import { RequestLines } from './feature/request-lines/request-lines';
+import { RequestLines } from './feature/request/request-lines/request-lines';
 //line item
 import { LineItemCreate } from './feature/line-item/line-item-create/line-item-create';
 import { LineItemList } from './feature/line-item/line-item-list/line-item-list';
 import { LineItemEdit } from './feature/line-item/line-item-edit/line-item-edit';
 import { LineItemDetail } from './feature/line-item/line-item-detail/line-item-detail';
-import { FormsModule } from '@angular/forms';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
     UserList,
     UserDetail,
     UserEdit,
+    UserLogin,
     //vendor
     VendorCreate,
     VendorList,
@@ -60,7 +62,8 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
     RequestList,
     RequestEdit,
     RequestDetail,
-  
+    RequestLines,
+
     //line item
     LineItemCreate,
     LineItemList,
@@ -71,15 +74,14 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
     RouterModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(withInterceptorsFromDi())
+    AuthService
   ],
   bootstrap: [App]
 })
 export class AppModule { }
-
-

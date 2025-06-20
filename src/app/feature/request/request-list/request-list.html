@@ -42,6 +42,24 @@
               title="Edit Request"
           /></a>
           |
+          <a *ngIf="r.status === 'REVIEW'" (click)="approve(r.id)">
+            <img
+              src="/approve-icon.png"
+              width="20"
+              height="20"
+              title="Approve Request"
+            />
+          </a>
+          |
+          <a *ngIf="r.status === 'REVIEW'" (click)="reject(r.id)">
+            <img
+              src="/reject-icon.png"
+              width="20"
+              height="20"
+              title="Reject Request"
+            />
+          </a>
+          |
           <a routerLink="/request-detail/{{r.id}}">
             <img
               src="/details.png"
@@ -62,7 +80,7 @@
           </a>
           |
 <!-- request-list.html  (inside the <td> with the action icons) -->
-  <a routerLink="/request-lines{{r.id}}">
+  <a routerLink="/request-lines/{{r.id}}">
     <img src="/lines.png"
   width="20" 
   height="20" 

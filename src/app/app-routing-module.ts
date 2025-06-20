@@ -5,6 +5,7 @@ import { UserList } from './feature/user/user-list/user-list';
 import { UserCreate } from './feature/user/user-create/user-create';
 import { UserDetail } from './feature/user/user-detail/user-detail';
 import { UserEdit } from './feature/user/user-edit/user-edit';
+import { UserLogin } from './feature/user/login/login';
 //import vendor CRUD
 import { VendorList } from './feature/vendor/vendor-list/vendor-list';
 import { VendorCreate } from './feature/vendor/vendor-create/vendor-create';
@@ -20,7 +21,7 @@ import { RequestList } from './feature/request/request-list/request-list';
 import { RequestCreate } from './feature/request/request-create/request-create';
 import { RequestDetail } from './feature/request/request-detail/request-detail';
 import { RequestEdit } from './feature/request/request-edit/request-edit';
-import { RequestLines } from './feature/request-lines/request-lines';
+import { RequestLines } from './feature/request/request-lines/request-lines';
 //import line item CRUD
 import { LineItemList } from './feature/line-item/line-item-list/line-item-list';
 import { LineItemCreate } from './feature/line-item/line-item-create/line-item-create';
@@ -31,12 +32,13 @@ import { LineItemDetail } from './feature/line-item/line-item-detail/line-item-d
 import { NotFound } from './core/not-found/not-found';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'user-list', pathMatch: 'full'},
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
   // User routes
   {path: 'user-list', component: UserList},
   {path: 'user-create', component: UserCreate},
   {path: 'user-edit/:id', component: UserEdit},
   {path: 'user-detail/:id', component: UserDetail},
+  {path: 'login', component: UserLogin},
   // Vendor routes
   {path: 'vendor-list', component: VendorList},
   {path: 'vendor-create', component: VendorCreate},
