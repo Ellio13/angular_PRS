@@ -1,24 +1,35 @@
 <nav class="main-nav">
-    <div class="nav-container">
-        <a routerLink="/" class="logo-container">
-            <img src="favicon.ico" alt="PRS" class="logo">
-            <span class="app-name">PRS</span>
+  <div class="nav-container">
+    <a routerLink="/" class="logo-container">
+      <img src="favicon.ico" alt="PRS" class="logo" />
+      <span class="app-name">PRS</span>
+    </a>
+
+    <div class="menu-items">
+      <!-- Show menu links if logged in -->
+      <ng-container *ngIf="isLoggedIn(); else loginLink">
+        <a *ngFor="let mi of menuItems"
+           [routerLink]="mi.href"
+           class="menu-item"
+           [title]="mi.tooltip"
+           [class.active]="mi.href === currentUrl">
+          {{ mi.display }}
         </a>
-        <div class="menu-items">
-            <a *ngFor="let mi of menuItems" 
-               [routerLink]="mi.href"
-               class="menu-item"
-               [title]="mi.tooltip"
-               [class.active]="mi.href === currentUrl">
-                {{ mi.display }}
-            </a>
-        </div>
+      </ng-container>
+
+      <!-- Show only login link if not logged in -->
+      <ng-template #loginLink>
+        <a routerLink="/login" class="menu-item" title="Login to access features">
+          Login
+        </a>
+      </ng-template>
     </div>
-    
-    <!-- Only show logout button when logged in -->
-    <button *ngIf="isLoggedIn()" 
-            class="logout-btn"
-            (click)="logout()">
-        Logout
-    </button>
+  </div>
+
+  <!-- Only show logout button when logged in -->
+  <button *ngIf="isLoggedIn()"
+          class="logout-btn"
+          (click)="logout()">
+    Logout
+  </button>
 </nav>

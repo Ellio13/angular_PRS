@@ -1,4 +1,6 @@
 export interface User {
+  reviewer: boolean;
+  admin: boolean;
   id: number;
   username: string;
   password: string;

@@ -44,12 +44,13 @@ export class UserLogin implements OnInit {
     this.subscription = this.authService.login(this.username, this.password).subscribe({
       next: (user) => {
         console.log('Login successful:', user);
-        this.loading = false;
+        this.loading = false;  // Reset loading state
+        // The auth service will handle storing the user and updating state
         this.router.navigate(['/']);
         form.reset();
       },
       error: (error) => {
-        this.loading = false;
+        this.loading = false;  // Reset loading state
         console.error('Login error details:', error);
         if (error.error && error.error.message) {
           this.errorMessage = error.error.message;

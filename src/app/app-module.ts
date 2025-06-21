@@ -1,36 +1,44 @@
-import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Menu } from './core/menu/menu';
 import { NotFound } from './core/not-found/not-found';
-//user
+
+import { AuthService } from './service/auth-service';
+import { AuthGuard } from './service/auth-guard'; // ✅ Adjusted path
+
+// User components
+import { UserLogin } from './feature/user/login/login';
 import { UserCreate } from './feature/user/user-create/user-create';
 import { UserList } from './feature/user/user-list/user-list';
-import { UserDetail } from './feature/user/user-detail/user-detail';
 import { UserEdit } from './feature/user/user-edit/user-edit';
-import { UserLogin } from './feature/user/login/login';
-import { AuthService } from './service/auth-service';
-//vendor
+import { UserDetail } from './feature/user/user-detail/user-detail';
+
+// Vendor components
 import { VendorCreate } from './feature/vendor/vendor-create/vendor-create';
 import { VendorList } from './feature/vendor/vendor-list/vendor-list';
 import { VendorEdit } from './feature/vendor/vendor-edit/vendor-edit';
 import { VendorDetail } from './feature/vendor/vendor-detail/vendor-detail';
-//product
+
+// Product components
 import { ProductCreate } from './feature/product/product-create/product-create';
 import { ProductList } from './feature/product/product-list/product-list';
 import { ProductEdit } from './feature/product/product-edit/product-edit';
 import { ProductDetail } from './feature/product/product-detail/product-detail';
-//request
+
+// Request components
 import { RequestCreate } from './feature/request/request-create/request-create';
 import { RequestList } from './feature/request/request-list/request-list';
 import { RequestEdit } from './feature/request/request-edit/request-edit';
 import { RequestDetail } from './feature/request/request-detail/request-detail';
 import { RequestLines } from './feature/request/request-lines/request-lines';
-//line item
+
+// LineItem components
 import { LineItemCreate } from './feature/line-item/line-item-create/line-item-create';
 import { LineItemList } from './feature/line-item/line-item-list/line-item-list';
 import { LineItemEdit } from './feature/line-item/line-item-edit/line-item-edit';
@@ -41,35 +49,38 @@ import { LineItemDetail } from './feature/line-item/line-item-detail/line-item-d
     App,
     Menu,
     NotFound,
-    //user
+
+    // User
+    UserLogin,
     UserCreate,
     UserList,
-    UserDetail,
     UserEdit,
-    UserLogin,
-    //vendor
+    UserDetail,
+
+    // Vendor
     VendorCreate,
     VendorList,
     VendorEdit,
     VendorDetail,
-    //product
+
+    // Product
     ProductCreate,
     ProductList,
     ProductEdit,
     ProductDetail,
-    //request
+
+    // Request
     RequestCreate,
     RequestList,
     RequestEdit,
     RequestDetail,
     RequestLines,
 
-    //line item
+    // Line Item
     LineItemCreate,
     LineItemList,
     LineItemEdit,
     LineItemDetail,
-
   ],
   imports: [
     BrowserModule,
@@ -79,9 +90,9 @@ import { LineItemDetail } from './feature/line-item/line-item-detail/line-item-d
     HttpClientModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners(),
-    AuthService
+    AuthService,
+    AuthGuard
   ],
   bootstrap: [App]
 })
-export class AppModule { }
+export class AppModule {}

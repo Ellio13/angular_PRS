@@ -18,7 +18,7 @@
     <td>Product:</td>
     <td>
       <select [(ngModel)]="lineItem.productId">
-        <option *ngFor="let p of products" [value]="p.id">{{ p.id }}</option>
+        <option *ngFor="let p of products" [value]="p.id">{{ p.name }}</option>
       </select>
     </td>
   </tr>
