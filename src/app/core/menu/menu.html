@@ -23,13 +23,12 @@
           Login
         </a>
       </ng-template>
+      <!-- Only show logout button when logged in -->
+      <button *ngIf="isLoggedIn()"
+              class="logout-btn"
+              (click)="logout()">
+        Logout
+      </button>
     </div>
   </div>
-
-  <!-- Only show logout button when logged in -->
-  <button *ngIf="isLoggedIn()"
-          class="logout-btn"
-          (click)="logout()">
-    Logout
-  </button>
 </nav>

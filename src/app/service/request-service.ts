@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, throwError } from "rxjs";
 import { Request } from "../model/request";
+import { AuthService } from './auth-service';
 
 const URL = "http://localhost:8080/api/requests";
 
@@ -10,7 +11,7 @@ const URL = "http://localhost:8080/api/requests";
 })
 export class RequestService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   list(): Observable<Request[]> {
     return this.http.get<Request[]>(URL);
@@ -25,6 +26,11 @@ export class RequestService {
   }
 
   update(request: Request): Observable<Request> {
+    // Only admins can update requests
+    const user = this.authService.getCurrentUser();
+    if (!user?.admin) {
+      return throwError(() => new Error('Insufficient permissions to update request'));
+    }
     return this.http.put<Request>(URL + '/' + request.id, request);
   }
 
@@ -33,19 +39,33 @@ export class RequestService {
   }
 
   delete(id: number): Observable<Request> {
+    // Only admins can delete requests
+    const user = this.authService.getCurrentUser();
+    if (!user?.admin) {
+      return throwError(() => new Error('Insufficient permissions to delete request'));
+    }
     return this.http.delete<Request>(URL + '/' + id);
   }
 
   approveRequest(id: number): Observable<Request> {
+    if (!this.authService.canApproveRejectRequests()) {
+      return throwError(() => new Error('Insufficient permissions to approve request'));
+    }
     return this.http.put<Request>(`${URL}/approve/${id}`, {});
   }
 
   rejectRequest(id: number, reason: string): Observable<Request> {
+    if (!this.authService.canApproveRejectRequests()) {
+      return throwError(() => new Error('Insufficient permissions to reject request'));
+    }
     return this.http.put<Request>(`${URL}/reject/${id}`, { reason });
   }
  
-submitForReview(id: number): Observable<Request> {
-  return this.http.put<Request>(`${URL}/submit-review/${id}`, null);
-}
+  submitForReview(id: number): Observable<Request> {
+    if (!this.authService.hasPermission('submitForReview')) {
+      return throwError(() => new Error('Insufficient permissions to submit for review'));
+    }
+    return this.http.put<Request>(`${URL}/submit-review/${id}`, null);
+  }
 
 }

@@ -1,51 +1,23 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { Request } from '../../../model/request';
-import { RequestService } from '../../../service/request-service';
-import { AuthService } from '../../../service/auth-service';
+import { Request } from '../../../../model/request';
+import { RequestService } from '../../../../service/request-service';
+import { AuthService } from '../../../../service/auth-service';
 
 @Component({
   selector: 'app-review',
-  imports: [CommonModule],
-  standalone: true,
-  template: `
-    <div class="p-4">
-      <h2>Review Requests</h2>
-      
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>User</th>
-            <th>Description</th>
-            <th>Total</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let r of requests">
-            <td>{{ r.id }}</td>
-            <td>{{ r.user.id }}</td>
-            <td>{{ r.description }}</td>
-            <td>{{ r.total }}</td>
-            <td>{{ r.status }}</td>
-            <td>
-              <button *ngIf="r.status === 'REVIEW' && isReviewer && r.user.id !== currentUser?.id" (click)="approve(r.id)" title="Only reviewers can approve requests">Approve</button>
-              <button *ngIf="r.status === 'REVIEW' && isReviewer && r.user.id !== currentUser?.id" (click)="reject(r.id)" title="Only reviewers can approve requests">Reject</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  `
+  standalone: false,
+  templateUrl: './request-review.html',
+  styleUrls: ['./request-review.css']
+  
 })
-export class ReviewComponent implements OnInit, OnDestroy {
+export class RequestReview implements OnInit, OnDestroy {
+  title: string = "Review Requests"
   requests: Request[] = [];
   isReviewer: boolean = false;
   currentUser: any;
   subscription!: Subscription;
+  isAdmin: boolean = false;
 
   constructor(
     private requestSvc: RequestService,
@@ -57,10 +29,11 @@ export class ReviewComponent implements OnInit, OnDestroy {
     this.currentUser = user;
     // Check if user is a reviewer (even if they're also an admin)
     this.isReviewer = user?.reviewer === true;
-    
+    this.isAdmin = user?.admin === true;
     // If user is an admin but not a reviewer, they can view but not approve/reject
-    if (user?.admin === true && !this.isReviewer) {
-      this.isReviewer = false; // Ensure they can't approve/reject
+    if (this.isAdmin === true) {
+      this.isReviewer = true;
+     // Ensure they can't approve/reject
     }
     this.refreshRequests();
   }
@@ -72,10 +45,10 @@ export class ReviewComponent implements OnInit, OnDestroy {
   refreshRequests(): void {
     if (this.isReviewer) {
       this.subscription = this.requestSvc.listByStatusAndRole('REVIEW', 'REVIEWER').subscribe({
-        next: (resp) => {
+        next: (resp: Request[]) => {
           this.requests = resp;
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error('Error retrieving review requests:', err);
         }
       });
@@ -91,7 +64,7 @@ export class ReviewComponent implements OnInit, OnDestroy {
           this.requests = [...this.requests];
         }
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Approval error:', err);
       }
     });
@@ -109,7 +82,7 @@ export class ReviewComponent implements OnInit, OnDestroy {
           this.requests = [...this.requests];
         }
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Rejection error:', err);
       }
     });

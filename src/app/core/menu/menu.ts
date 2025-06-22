@@ -42,7 +42,7 @@ export class Menu implements OnInit {
       { display: 'Vendors', href: '/vendor-list', tooltip: 'Manage Vendors' },
       { display: 'Products', href: '/product-list', tooltip: 'Manage Products' },
       { display: 'Requests', href: '/request-list', tooltip: 'Manage Requests' },
-      { display: 'Review', href: '/review', tooltip: 'Review Requests' },
+      { display: 'Review', href: '/request-review', tooltip: 'Review Requests' },
       { display: 'Line Items', href: '/line-item-list', tooltip: 'Manage Line Items' }
     ];
   }

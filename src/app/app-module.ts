@@ -10,7 +10,7 @@ import { Menu } from './core/menu/menu';
 import { NotFound } from './core/not-found/not-found';
 
 import { AuthService } from './service/auth-service';
-import { AuthGuard } from './service/auth-guard'; // ✅ Adjusted path
+import { AuthGuard } from './service/auth-guard';
 
 // User components
 import { UserLogin } from './feature/user/login/login';
@@ -43,6 +43,7 @@ import { LineItemCreate } from './feature/line-item/line-item-create/line-item-c
 import { LineItemList } from './feature/line-item/line-item-list/line-item-list';
 import { LineItemEdit } from './feature/line-item/line-item-edit/line-item-edit';
 import { LineItemDetail } from './feature/line-item/line-item-detail/line-item-detail';
+import { RequestReview } from './feature/request/review/request-review/request-review';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { LineItemDetail } from './feature/line-item/line-item-detail/line-item-d
     RequestEdit,
     RequestDetail,
     RequestLines,
+    RequestReview,
 
     // Line Item
     LineItemCreate,

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from '../../../model/user';
 import { UserService } from '../../../service/user-service';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../../service/auth-service';
 
 @Component({
   selector: 'app-user-list',
@@ -14,11 +15,19 @@ export class UserList implements OnInit, OnDestroy {
   title: string = 'User List';
   subscription!: Subscription;
   users: User[] =[];
+  isAdmin: boolean = false;
 
-  constructor(private userSvc: UserService) { 
+  constructor(private userSvc: UserService, private authService: AuthService) { 
   }
 
   ngOnInit(): void {
+    // Only load data if user is admin
+    const currentUser = this.authService.getCurrentUser();
+    this.isAdmin = currentUser?.admin || false;
+    if (!this.isAdmin) {
+      return;
+    }
+
     // call userSvrSvc and populate list of users
     this.subscription = this.userSvc.list().subscribe({
       next: (resp) => {

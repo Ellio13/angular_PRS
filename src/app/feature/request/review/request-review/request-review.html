@@ -1,0 +1,46 @@
+<div class="p-4">
+  <h2>Review Requests</h2>
+  
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>User</th>
+        <th>Description</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of requests">
+        <td>{{ r.id }}</td>
+        <td>{{ r.user.id }}</td>
+        <td>{{ r.description }}</td>
+        <td>{{ r.total }}</td>
+        <td>{{ r.status }}</td>
+        <td>
+          <button *ngIf="r.status === 'REVIEW' && isReviewer && r.user.id !== currentUser?.id" 
+          (click)="approve(r.id)" title="Only reviewers can approve requests">Approve</button>
+          <button *ngIf="r.status === 'REVIEW' && isReviewer && r.user.id !== currentUser?.id" 
+          (click)="reject(r.id)" title="Only reviewers can reject requests">Reject</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+    
+  <!-- Approve Icon from Font Awesome
+  <i *ngIf="r.status === 'REVIEW' && isReviewer && r.user.id !== currentUser?.id"
+     class="fa-regular fa-circle-check"
+     style="color: #74C0FC; cursor: pointer; margin-right: 20px;"
+     title="Approve Request"
+     (click)="approve(r.id)">
+  </i>
+
+  Reject Icon from Font Awesome
+  <i *ngIf="r.status === 'REVIEW' && isReviewer && r.user.id !== currentUser?.id"
+  title="Reject Request"
+  class="fa-solid fa-circle-xmark" style="color: #d72619;"
+  (click)="reject(r.id)"></i> -->

@@ -1,13 +1,13 @@
 
 
 <div class="p-4">
-  <section class="heading">
+  <section class="heading" *ngIf="isAdmin">
     <span class="page-title font-weight-bold font-italic">{{ title }}</span>
     <a routerLink="/user-create">
       <img width="20" height="20" src="add-icon.png" title="Add New" />
     </a>
   </section>
-  <table *ngIf="users" class="table table-striped table-hover">
+  <table *ngIf="users && isAdmin" class="table table-striped table-hover">
     <thead>
       <th>Id</th>
       <th>username</th>

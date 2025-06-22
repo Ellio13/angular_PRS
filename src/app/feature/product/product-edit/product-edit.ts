@@ -23,17 +23,17 @@ export class ProductEdit implements OnInit, OnDestroy {
 
   constructor(
     private productSvc: ProductService,
-    private vendorSvc:  VendorService,        // ← inject
+    private vendorSvc:  VendorService,        //inject
     private router: Router,
     private actRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
 
-    /* 1. load vendors for the dropdown */
+    // load vendors for the dropdown
     this.vendorSvc.list().subscribe(vs => this.vendors = vs);
 
-    /* 2. load the product being edited */
+    //load the product being edited
     this.actRoute.params.subscribe(p => {
       this.productId = +p['id'];
       this.subscription = this.productSvc.getById(this.productId).subscribe({
@@ -46,7 +46,7 @@ export class ProductEdit implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
   }
-
+//this is here because it was returning full info for vendor
   save(): void {
     const dto = {
       id:         this.product.id,

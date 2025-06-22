@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Product } from '../../../model/product';
 import { ProductService } from '../../../service/product-service';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../../service/auth-service';
 
 @Component({
   selector: 'app-product-list',
@@ -14,10 +15,18 @@ export class ProductList implements OnInit, OnDestroy {
   title: string = 'Product List';
   subscription!: Subscription;
   products: Product[] = [];
+  isAdmin: boolean = false;
 
-  constructor(private productSvc: ProductService) {}
+  constructor(private productSvc: ProductService, private authService: AuthService) {}
 
   ngOnInit(): void {
+    // Only load data if user is admin
+    const currentUser = this.authService.getCurrentUser();
+    this.isAdmin = currentUser?.admin || false;
+    if (!this.isAdmin) {
+      return;
+    }
+
     this.subscription = this.productSvc.list().subscribe({
       next: (resp: Product[]) => {
         this.products = resp;

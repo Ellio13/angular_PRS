@@ -67,6 +67,7 @@ export class LineItemEdit implements OnInit, OnDestroy {
       return;
     }
 
+    //issue here with updating line item
     this.lineItemSvc.update(this.lineItem.id, dto).subscribe({
       next: () => this.router.navigateByUrl('/line-item-list'),
       error: err => {

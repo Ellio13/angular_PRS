@@ -34,13 +34,25 @@
         <td>{{ r.submittedDate }}</td>
         <td>{{ r.reasonForRejection }}</td>
         <td>
-          <a routerLink="/request-edit/{{r.id}}">
-            <img
-              src="/pencil-icon.png"
-              width="20"
-              height="20"
-              title="Edit Request"
-          /></a>
+          <span *ngIf="currentUser?.admin">
+            <a routerLink="/request-edit/{{r.id}}">
+              <img
+                src="/pencil-icon.png"
+                width="20"
+                height="20"
+                title="Edit Request"
+              /></a>
+            |
+            <a>
+              <img
+                src="/delete.jpg"
+                width="20"
+                height="20"
+                title="Delete Request"
+                (click)="delete(r.id)"
+              />
+            </a>
+          </span>
           |
           <a routerLink="/request-detail/{{r.id}}">
             <img
@@ -50,24 +62,14 @@
               title="Request Details"
             />
           </a>
+          
           |
-          <a>
-            <img
-              src="/delete.jpg"
-              width="20"
-              height="20"
-              title="Delete Request"
-              (click)="delete(r.id)"
-            />
+          <a routerLink="/request-lines/{{r.id}}">
+            <img src="/lines.png"
+              width="20" 
+              height="20" 
+              title="Request Lines">
           </a>
-          |
-<!-- request-list.html  (inside the <td> with the action icons) -->
-  <a routerLink="/request-lines/{{r.id}}">
-    <img src="/lines.png"
-  width="20" 
-  height="20" 
-  title="Request Lines">
-</a>
         </td>
       </tr>
     </tbody>

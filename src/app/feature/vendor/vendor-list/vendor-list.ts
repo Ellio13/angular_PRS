@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Vendor } from '../../../model/vendor';
 import { VendorService } from '../../../service/vendor-service';
+import { AuthService } from '../../../service/auth-service';
 
 @Component({
   selector: 'app-vendor-list',
@@ -13,10 +14,18 @@ export class VendorList implements OnInit, OnDestroy {
   title: string = 'Vendor List';
   subscription!: Subscription;
   vendors: Vendor[] = [];
+  isAdmin: boolean = false;
 
-  constructor(private vendorSvc: VendorService) {}
+  constructor(private vendorSvc: VendorService, private authService: AuthService) {}
 
   ngOnInit(): void {
+    // Only load data if user is admin
+    const currentUser = this.authService.getCurrentUser();
+    this.isAdmin = currentUser?.admin || false;
+    if (!this.isAdmin) {
+      return;
+    }
+
     this.subscription = this.vendorSvc.list().subscribe({
       next: (resp) => {
         this.vendors = resp;

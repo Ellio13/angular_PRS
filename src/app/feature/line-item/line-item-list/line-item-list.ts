@@ -10,7 +10,7 @@ import { LineItemService } from '../../../service/line-item-service';
   styleUrl: './line-item-list.css'
 })
 export class LineItemList implements OnInit, OnDestroy {
-  title: string = "LineItem-List";
+  title: string = "Line Items List";
   subscription!: Subscription;
   lineItems: LineItem[] = [];
 li: any;

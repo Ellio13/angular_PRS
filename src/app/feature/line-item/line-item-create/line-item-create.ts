@@ -17,7 +17,8 @@ import { LineItemDTO } from '../../../model/line-item-dto';
 })
 export class LineItemCreate implements OnInit, OnDestroy {
   title: string = 'Create Line Item';
-  subscription!: Subscription;
+  productSubscription!: Subscription;
+  requestSubscription!: Subscription;
   lineItem: LineItem = new LineItem();
   products: Product[] = [];
   requests: Request[] = [];
@@ -39,20 +40,23 @@ export class LineItemCreate implements OnInit, OnDestroy {
       this.requestLocked = true;
     }
 
-    this.subscription = this.productSvc.list().subscribe({
+    this.productSubscription = this.productSvc.list().subscribe({
       next: (resp) => this.products = resp,
       error: (err) => console.log('Error retrieving products', err)
     });
 
-    this.subscription = this.requestSvc.list().subscribe({
+    this.requestSubscription = this.requestSvc.list().subscribe({
       next: (resp) => this.requests = resp,
       error: (err) => console.log('Error retrieving requests', err)
     });
   }
 
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+    if (this.productSubscription) {
+      this.productSubscription.unsubscribe();
+    }
+    if (this.requestSubscription) {
+      this.requestSubscription.unsubscribe();
     }
   }
 
@@ -69,7 +73,7 @@ export class LineItemCreate implements OnInit, OnDestroy {
       next: (resp) => {
         console.log('Line item created:', resp);
 
-        // 🔁 Submit the request for review after line item is saved
+        // Submit the request for review after line item is saved
         this.requestSvc.submitForReview(dto.requestId).subscribe({
           next: (reviewedRequest) => {
             console.log('Request submitted for review:', reviewedRequest);

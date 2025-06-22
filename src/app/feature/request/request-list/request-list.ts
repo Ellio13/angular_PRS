@@ -54,18 +54,63 @@ export class RequestList implements OnInit, OnDestroy {
     });
   }
 
-
-
   delete(id: number): void {
     this.subscription = this.requestSvc.delete(id).subscribe({
       next: () => {
-        this.refreshRequests();
-        alert('Request deleted successfully!');
+        // Refresh the request list after delete
+        this.subscription = this.requestSvc.list().subscribe({
+          next: (resp) => {
+            this.requests = resp;
+          },
+          error: (err: any) => {
+            console.log("Error refreshing request list", err);
+          }
+        });
       },
-      error: (err) => {
-        console.error('Error deleting request:', err);
+      error: (err: any) => {
+        console.log('Error deleting request for id: ' + id);
         alert('Error deleting request for id: ' + id);
+      }
+    });
+  }
+
+  approve(id: number): void {
+    this.subscription = this.requestSvc.approveRequest(id).subscribe({
+      next: () => {
+        // Refresh the request list after approval
+        this.subscription = this.requestSvc.list().subscribe({
+          next: (resp) => {
+            this.requests = resp;
+          },
+          error: (err: any) => {
+            console.log("Error refreshing request list", err);
+          }
+        });
       },
+      error: (err: any) => {
+        console.log('Error approving request', err);
+        alert('Error approving request: ' + err.message);
+      }
+    });
+  }
+
+  reject(id: number): void {
+    this.subscription = this.requestSvc.rejectRequest(id, 'Rejected by reviewer').subscribe({
+      next: () => {
+        // Refresh the request list after rejection
+        this.subscription = this.requestSvc.list().subscribe({
+          next: (resp) => {
+            this.requests = resp;
+          },
+          error: (err: any) => {
+            console.log("Error refreshing request list", err);
+          }
+        });
+      },
+      error: (err: any) => {
+        console.log('Error rejecting request', err);
+        alert('Error rejecting request: ' + err.message);
+      }
     });
   }
 }
