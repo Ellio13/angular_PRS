@@ -36,22 +36,15 @@ export class ProductCreate implements OnInit, OnDestroy {
   }
 
   addProduct(): void {
-
-    // build DTO (numeric vendorId)
-    const dto = {
-      name:       this.newProduct.name,
-      vendorId:   this.newProduct.vendorId,             // numeric value from dropdown
-      partNumber: this.newProduct.partNumber,
-      price:      this.newProduct.price,
-      unit:       this.newProduct.unit,
-      photoPath:  this.newProduct.photoPath
-    };
-
-    console.log('Submitting new product:', dto);
-
-    this.subscription = this.productSvc.add(dto as any).subscribe({
+    console.log('Submitting new product:', this.newProduct);
+    
+    this.subscription = this.productSvc.add(this.newProduct).subscribe({
       next: () => this.router.navigateByUrl('/product-list'),
-      error: err => console.log('Error adding product', err)
+      error: err => {
+        console.error('Error adding product:', err);
+        alert('Failed to add product. Please try again.');
+      }
     });
   }
-}
+  }
+

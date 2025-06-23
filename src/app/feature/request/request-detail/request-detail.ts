@@ -31,7 +31,7 @@ request!: Request;
           this.request = resp;
         },
         error: (err) => {
-          console.log("Error retrieving user for id: " + this.requestId, err);
+          console.log("Error retrieving request for id: " + this.requestId, err);
         }
       });
     });
@@ -44,7 +44,7 @@ request!: Request;
   delete() {
     this.requestSvc.delete(this.requestId).subscribe({
       next: (resp) => {
-        this.router.navigateByUrl('/user-list');
+        this.router.navigateByUrl('/request-list');
       },
       error: (err) => {
         console.log(err);

@@ -2,10 +2,17 @@
 
 <div class="p-4">
   <section class="heading" *ngIf="isAdmin">
-    <span class="page-title font-weight-bold font-italic">{{ title }}</span>
-    <a routerLink="/user-create">
-      <img width="20" height="20" src="add-icon.png" title="Add New" style="margin-left: 10px;" />
-    </a>
+    <span class="page-title">Users</span>
+    
+<div class="p-4">
+  <section class="heading centered" *ngIf="isAdmin">
+    
+    <div class="add-request-container">
+      <span class="add-request-text">Add User</span>
+      <a routerLink="/user-create">
+        <img width="20" height="20" src="add-icon.png" title="Add New" style="margin-left: 10px;"/>
+      </a>
+    </div>
   </section>
   <table *ngIf="users && isAdmin" class="table table-hover">
     <thead>
@@ -18,6 +25,7 @@
       <th>email</th>
       <th>reviewer</th>
       <th>admin</th>
+      <th>actions</th>
     </thead>
     <tbody>
       <tr *ngFor="let u of users">

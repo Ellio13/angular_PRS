@@ -5,32 +5,23 @@
   <div *ngIf="product">
     <main class="single">
       <table class="table table-sm">
-        <tr>
-         <td>Vendor:</td>
-<td>
-  <!-- bind the whole vendor object -->
-  <select [(ngModel)]="product.vendor" class="rounded">
-    <option *ngFor="let v of vendors" [ngValue]="v">
-      {{ v.id }} – {{ v.name }}
-    </option>
-  </select>
-</td>
-
-
+<tr>
           <td>Part Number:</td>
           <td>
             <input [(ngModel)]="product.partNumber" class="rounded" type="text" />
           </td>
-        </tr>
-        <tr>
+          </tr>
+          <tr>
           <td>Name:</td>
           <td>
             <input [(ngModel)]="product.name" class="rounded" type="text" />
           </td>
+          </tr>
+          <tr>
           <td>Price:</td>
           <td>
-            <input [(ngModel)]="product.price" class="rounded" type="text"  />
-         <!--add this <td>{{ lineItem.product.price | currency }}</td>-->
+            <input [(ngModel)]="product.price" class="rounded" type="text" />
+         
           </td>
         </tr>
         <tr>

@@ -41,18 +41,19 @@
     </tr>
     <tr>
       <td>Reviewer:</td>
-    </tr>
-    <tr>
       <td>
         <input [(ngModel)]="newUser.reviewer" type="checkbox" />
       </td>
     </tr>
-      <tr>
+    <tr>
       <td>Admin:</td>
       <td>
         <input [(ngModel)]="newUser.admin" type="checkbox" />
       </td>
     </tr>
   </table>
-  <button (click)="addUser()">Add User</button>
+  <div class="button-container">
+    <button (click)="addUser()" style="border-radius: 8px;">Add User</button>
+    <button routerLink="/user-list" style="margin-left: 15px; border-radius: 8px;">Cancel</button>
+  </div>
 </div>

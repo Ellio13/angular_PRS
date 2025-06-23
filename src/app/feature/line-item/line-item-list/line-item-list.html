@@ -1,24 +1,31 @@
-
 <div class="p-4">
-  <section class="heading">
-    <span class="page-title font-weight-bold font-italic">{{ title }}</span>
-    <a routerLink="/line-item-create">
-      <img width="20" height="20" src="add-icon.png" title="Add New"
-      style="margin-left: 10px;"/>
-    </a>
+  <section class="heading" *ngIf="isAdmin">
+    <span class="page-title">Line Items</span>
+    
+<div class="p-4">
+  <section class="heading centered" *ngIf="isAdmin">
+    <div class="add-request-container">
+      <span class="add-request-text">Add Line Item</span>
+      <a routerLink="/line-item-create">
+        <img width="20" height="20" src="add-icon.png" title="Add New" style="margin-left: 10px;" />
+      </a>
+    </div>
   </section>
   <table *ngIf="lineItems" class="table table-hover">
     <thead>
       <th>Id</th>
       <th>Request Id</th>
       <th>Product Id</th>
+      <th>Product Name</th>
       <th>Quantity</th>
+      <th>Actions</th>
     </thead>
     <tbody>
      <tr *ngFor="let li of lineItems">
   <td>{{ li.id }}</td>
   <td>{{ li.request?.id }}</td>
   <td>{{ li.product?.id }}</td>
+  <td>{{ li.product?.name }}</td>
   <td>{{ li.quantity }}</td>
   <td>
     <a routerLink="/line-item-edit/{{li.id}}">

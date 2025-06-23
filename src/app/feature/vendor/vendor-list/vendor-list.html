@@ -1,22 +1,26 @@
 <div class="p-4">
-    <section class="heading" *ngIf="isAdmin">
-        <span class="page-title font-weight-bold font-italic">{{ title }}</span>
-        <a routerLink="/vendor-create">
-            <img width="20" height="20" src="/add-icon.png" title="Add New Vendor"
-            style="margin-left: 10px;" />
-        </a>
-    </section>
+  <section class="heading" *ngIf="isAdmin">
+    <span class="page-title">Vendors</span>
+<div class="p-4">
+  <section class="heading centered" *ngIf="isAdmin">
+    <div class="add-request-container">
+      <span class="add-request-text">Add Vendor</span>
+      <a routerLink="/vendor-create">
+        <img width="20" height="20" src="/add-icon.png" title="Add New Vendor" style="margin-left: 10px;" />
+      </a>
+    </div>
+  </section>
   <table *ngIf="vendors && isAdmin" class="table table-hover">
     <thead>
       <th>Id</th>
-      <th>code</th>
-      <th>name</th>
-      <th>address</th>
-      <th>city</th>
-      <th>state</th>
-      <th>zip</th>
-      <th>phone number</th>
-      <th>email</th>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Zip</th>
+      <th>Phone Number</th>
+      <th>Email</th>
       <th>Actions</th>
     </thead>
     <tbody>
@@ -31,30 +35,17 @@
         <td>{{ v.phoneNumber }}</td>
         <td>{{ v.email }}</td>
         <td>
-          <a routerLink="/vendor-edit/{{ v.id }}">
-            <img
-              src="/pencil-icon.png"
-              width="20"
-              height="20"
-              title="Edit Vendor"
-          /></a>
-          |
-          <a routerLink="/vendor-detail/{{ v.id }}">
-            <img
-              src="/details.png"
-              width="20"
-              height="20"
-              title="Vendor Details"
-            />
+          <a routerLink="/vendor-edit/{{v.id}}">
+            <img src="/pencil-icon.png" width="20" height="20" title="Edit Vendor" />
           </a>
           |
-          <a routerLink="/vendor-delete/{{ v.id }}">
-            <i class="bi bi-trash3"
-            width="20"
-              height="20"
-              title="Delete Vendor">
-            </i>
-            </a>
+          <a routerLink="/vendor-detail/{{v.id}}">
+            <img src="/details.png" width="20" height="20" title="Vendor Details" />
+          </a>
+          |
+          <a>
+            <i class="bi bi-trash3" style="cursor: pointer;" title="Delete Vendor" (click)="delete(v.id)"></i>
+          </a>
         </td>
       </tr>
     </tbody>

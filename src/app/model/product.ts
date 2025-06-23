@@ -2,17 +2,17 @@ import { Vendor } from "./vendor";
 
 export class Product {
  id: number; // primary key, internally generated
- vendor: Vendor; // FK to Vendor, internally generated
+ vendorId: number; // FK to Vendor
+ vendor?: Vendor; // Vendor object for display
  partNumber: string; // string of 50 characters
  name: string; // string of 150 characters
  price: number; // 10 digits, 2 decimal places
  unit: string; // nullable, string of 255 characters
  photoPath: string; // string of 255 characters
-email: any;
-vendorId: any;
 
-constructor(id: number = 0,
-    vendor: Vendor = new Vendor(),
+constructor(
+    id: number = 0,
+    vendorId: number = 0,
     partNumber: string = '',
     name: string = '',
     price: number = 0.00,
@@ -21,7 +21,7 @@ constructor(id: number = 0,
 )
 {
     this.id = id;
-    this.vendor = vendor;
+    this.vendorId = vendorId;
     this.partNumber = partNumber;
     this.name = name;
     this.price = price;
@@ -29,4 +29,3 @@ constructor(id: number = 0,
     this.photoPath = photoPath;
 }
 }
-

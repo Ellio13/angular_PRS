@@ -1,12 +1,17 @@
-
 <div class="p-4">
   <section class="heading" *ngIf="isAdmin">
-    <span class="page-title font-weight-bold font-italic">{{ title }}</span>
-    <a routerLink="/product-create">
-      <img width="20" height="20" src="add-icon.png" title="Add New" style="margin-left: 10px;" />
-    </a>
+    <span class="page-title">Products</span>
+    
+<div class="p-4">
+  <section class="heading centered" *ngIf="isAdmin">
+    <div class="add-request-container">
+      <span class="add-request-text">Add Product</span>
+      <a routerLink="/product-create">
+        <img width="20" height="20" src="add-icon.png" title="Add New" style="margin-left: 10px;" />
+      </a>
+    </div>
   </section>
-  <table *ngIf="products && isAdmin" class="table table-hover">
+  <table *ngIf="products && isAdmin" class="table table-hover" style="width: 100%;">
     <thead>
       <th>Id</th>
       <th>Vendor Name</th>
@@ -20,7 +25,7 @@
     <tbody>
       <tr *ngFor="let p of products">
         <td>{{ p.id }}</td>
-        <td>{{ p.vendor.name }}</td>
+        <td>{{ p.vendor?.name }}</td>
         <td>{{ p.partNumber }}</td>
         <td>{{ p.name }}</td>
         <td>{{ p.price | currency }}</td>
@@ -47,11 +52,9 @@
           |
           <a>
             <i class="bi bi-trash3"
-              width="20"
-              height="20"
+              style="cursor: pointer;"
               title="Delete Product"
               (click)="delete(p.id)"></i>
-            
           </a>
         </td>
       </tr>

@@ -66,8 +66,8 @@ export class RequestEdit implements OnInit, OnDestroy {
         this.router.navigateByUrl('/request-list');
       },
       error: (err) => {
-        console.log('Error saving request:', err);
-        console.log('Error details:', err.error);
+        console.error('Error saving request:', err);
+        alert('Failed to save request. Please try again.');
       }
     });
   }
