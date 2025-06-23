@@ -1,0 +1,35 @@
+/* Column widths */
+.id-col {
+  width: 50px;
+}
+
+.user-col {
+  width: 100px;
+}
+
+.description-col {
+  width: 200px;
+}
+
+.total-col {
+  width: 100px;
+}
+
+.status-col {
+  width: 100px;
+}
+
+.actions-col {
+  width: 150px;
+}
+
+/* Ensure these styles are applied to both headers and cells */
+.id-col,
+.user-col,
+.description-col,
+.total-col,
+.status-col,
+.actions-col {
+  min-width: 0; /* Prevents column from shrinking */
+  white-space: nowrap; /* Prevents text from wrapping */
+}

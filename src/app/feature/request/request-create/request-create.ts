@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { Request } from '../../../model/request';  // Add this import
+import { Request } from '../../../model/request';
 import { RequestService } from '../../../service/request-service';
+import { AuthService } from '../../../service/auth-service';
 
 @Component({
   selector: 'app-request-create',
@@ -17,11 +18,21 @@ export class RequestCreate implements OnInit, OnDestroy {
 
   constructor(
     private requestSvc: RequestService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
   }
 
   ngOnInit(): void {
+    const currentUser = this.authService.getCurrentUser();
+    if (currentUser) {
+      this.newRequest.user = { ...currentUser };
+    }
+  }
+
+  // Prevent user ID modification
+  set userId(value: number) {
+    // Do nothing - prevent modification
   }
 
   ngOnDestroy(): void {

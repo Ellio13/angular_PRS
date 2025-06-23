@@ -4,6 +4,9 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+// Root module that configures the application's core functionality
+// Provides common Angular modules and declares all components
+
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Menu } from './core/menu/menu';
@@ -46,7 +49,9 @@ import { LineItemDetail } from './feature/line-item/line-item-detail/line-item-d
 import { RequestReview } from './feature/request/review/request-review/request-review';
 
 @NgModule({
+  // All components in the application
   declarations: [
+    // Root component
     App,
     Menu,
     NotFound,
@@ -84,15 +89,22 @@ import { RequestReview } from './feature/request/review/request-review/request-r
     LineItemEdit,
     LineItemDetail,
   ],
+  // Core Angular modules and routing configuration
   imports: [
+    // Enables browser-specific features and DOM manipulation
     BrowserModule,
-    AppRoutingModule,
-    RouterModule,
+    // Enables two-way data binding
     FormsModule,
-    HttpClientModule
+    // Enables HTTP requests to the backend (ngModel)
+    HttpClientModule,
+    // Application routes configuration
+    AppRoutingModule
   ],
+  // Services that are available throughout the application
   providers: [
+    // Handles user authentication and authorization
     AuthService,
+    // Guards routes to ensure proper access control
     AuthGuard
   ],
   bootstrap: [App]

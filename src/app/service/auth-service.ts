@@ -4,9 +4,9 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { User } from '../model/user';
 
 
-//authentication service - these functions store user login state in local memory,
-//remove login state at logout, and allow comparisons between logged in user
-//and user records in the database
+// Authentication service that manages user login state and permissions
+// Provides methods for login, logout, and checking user permissions
+// Stores user data in localStorage for persistence between page reloads
 
 @Injectable({
   providedIn: 'root'
@@ -19,32 +19,41 @@ export class AuthService {
   private apiUrl = 'http://localhost:8080/api/users';
 
   constructor(private http: HttpClient) {
+    // Initialize current user from localStorage or null if not logged in
     this.currentUserSubject = new BehaviorSubject<User | null>(JSON.parse(localStorage.getItem('currentUser') || 'null'));
     this.currentUser = this.currentUserSubject.asObservable();
+    // Initialize login state observable
     this.loginStateSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
     this.loginState$ = this.loginStateSubject.asObservable();
   }
 
   login(username: string, password: string): Observable<any> {
+    // Authenticate user with backend and store credentials
     return this.http.post<any>(`${this.apiUrl}/login`, { username, password }).pipe(
       tap((user: User) => {
+        // Store user data in localStorage for persistence
         localStorage.setItem('currentUser', JSON.stringify(user));
+        // Update current user subject
         this.currentUserSubject.next(user);
+        // Update login state
         this.loginStateSubject.next(true);
       })
     );
   }
 
   logout(): void {
+    // Clear user data and update login state
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
     this.loginStateSubject.next(false);
   }
 
+  // Get current logged in user
   getCurrentUser(): User | null {
     return this.currentUserSubject.value;
   }
 
+  // Check if user is logged in
   isLoggedIn(): boolean {
     return this.getCurrentUser() !== null;
   }
@@ -65,8 +74,7 @@ export class AuthService {
   private allowedRegularUserActions = [
     'createRequest',
     'requestLines',
-    'viewProducts',
-    'viewVendors'
+
   ];
 
   // List of actions that are restricted to admins only
@@ -91,16 +99,26 @@ export class AuthService {
     'deleteLineItem'
   ];
 
+  // Check if user is an admin
+  isAdmin(): boolean {
+    const user = this.getCurrentUser();
+    return user?.admin || false;
+  }
+
   // Check if user has permission to perform an action
   hasPermission(action: string): boolean {
     const user = this.getCurrentUser();
     if (!user) return false;
 
+    if (!user.reviewer && !user.admin && action ==='viewRequests') {
+      return false;
+    }
     // Regular users can only perform actions in the allowed list
     if (!user.reviewer && !user.admin) {
       if (this.adminOnlyActions.includes(action)) {
         return false;
       }
+    
       return this.allowedRegularUserActions.includes(action);
     }
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './service/auth-service';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,15 @@ import { Component } from '@angular/core';
 })
 export class App {
   protected title = 'prs-ng';
+
+  constructor(private authService: AuthService) {}
+
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
+
+  getUsername(): string {
+    const user = this.authService.getCurrentUser();
+    return user?.username || '';
+  }
 }

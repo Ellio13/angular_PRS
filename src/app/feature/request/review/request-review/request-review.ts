@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { Request } from '../../../../model/request';
 import { RequestService } from '../../../../service/request-service';
 import { AuthService } from '../../../../service/auth-service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-review',
   standalone: false,
@@ -21,7 +21,8 @@ export class RequestReview implements OnInit, OnDestroy {
 
   constructor(
     private requestSvc: RequestService,
-    private authService: AuthService
+    public authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -32,10 +33,11 @@ export class RequestReview implements OnInit, OnDestroy {
     this.isAdmin = user?.admin === true;
     // If user is an admin but not a reviewer, they can view but not approve/reject
     if (this.isAdmin === true) {
-      this.isReviewer = true;
+      this.router.navigate(['/request/list']);
      // Ensure they can't approve/reject
     }
-    this.refreshRequests();
+    if (this.isReviewer) {this.refreshRequests();
+    }
   }
 
   ngOnDestroy(): void {
@@ -46,7 +48,7 @@ export class RequestReview implements OnInit, OnDestroy {
     if (this.isReviewer) {
       this.subscription = this.requestSvc.listByStatusAndRole('REVIEW', 'REVIEWER').subscribe({
         next: (resp: Request[]) => {
-          this.requests = resp;
+          this.requests = resp.filter(request => request.status === 'REVIEW');;
         },
         error: (err: any) => {
           console.error('Error retrieving review requests:', err);

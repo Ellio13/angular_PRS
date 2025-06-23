@@ -1,1 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Test style to verify styles.css is working */
+body {
+  font-family: 'Lato', sans-serif !important;
+  background-color: #f0f0f0 !important;
+}
+
+/* Table styles */
+.table {
+  font-family: 'Lato', sans-serif !important;
+  font-size: 12px !important;
+}
+
+.table th {
+  font-family: 'Lato', sans-serif !important;
+  font-weight: bold !important;
+  font-size: 12px !important;
+  text-align: left !important;
+  padding: 8px !important;
+  background-color: #f8f9fa !important;
+}
+
+/* Adjust column widths */
+.table th:nth-child(12) {
+  width: 150px !important;
+}
+
+.table th:nth-child(13) {
+  width: 100px !important;
+}
+
+.table td {
+  font-family: 'Lato', sans-serif !important;
+  font-size: 12px !important;
+  padding: 8px !important;
+}
+
+/* Add some spacing between table and content */
+.table {
+  margin-bottom: 20px !important;
+}
+

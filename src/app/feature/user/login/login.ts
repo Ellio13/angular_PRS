@@ -39,7 +39,7 @@ export class UserLogin implements OnInit {
     this.loading = true;
     this.errorMessage = '';
     
-    console.log('Attempting login with:', { username: this.username, password: '***' });
+    console.log('Login attempt:', { username: this.username, password: '***' });
     
     this.subscription = this.authService.login(this.username, this.password).subscribe({
       next: (user) => {
@@ -52,15 +52,7 @@ export class UserLogin implements OnInit {
       error: (error) => {
         this.loading = false;  // Reset loading state
         console.error('Login error details:', error);
-        if (error.error && error.error.message) {
-          this.errorMessage = error.error.message;
-        } else if (error.status === 401) {
-          this.errorMessage = 'Invalid password';
-        } else if (error.status === 404) {
-          this.errorMessage = 'User not found';
-        } else {
-          this.errorMessage = 'An error occurred during login';
-        }
+    this.errorMessage = 'Invalid login - incorrect user/password combo';
       }
     });
   }

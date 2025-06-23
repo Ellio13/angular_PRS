@@ -28,21 +28,19 @@ export class RequestLines implements OnInit, OnDestroy {
     private liSvc: LineItemService
   ) {}
 
-  /* ---------------- lifecycle ---------------- */
 
   ngOnInit(): void {
     this.id = +this.route.snapshot.params['id'];
     console.log('request-lines id from URL =', this.id); // ① should log a number
 
-    this.refreshRequest(); // ✅ Load the request object
-    this.loadLines(); // ✅ Load the line items
+    this.refreshRequest(); //Load the request object
+    this.loadLines(); //Load the line items
   }
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
   }
 
-  /* ---------------- actions ------------------ */
 
   approveRequest(): void {
     console.log('Approving request with ID:', this.id);
@@ -53,7 +51,7 @@ export class RequestLines implements OnInit, OnDestroy {
         this.reqSvc.update(request).subscribe({
           next: () => {
             console.log('Request approved successfully!');
-            this.refreshRequest(); // ✅ Refresh the request object
+            this.refreshRequest(); // refresh request object
             alert('Request approved successfully!');
           },
           error: (err) => console.error('Error approving request:', err)
@@ -72,16 +70,14 @@ export class RequestLines implements OnInit, OnDestroy {
 
   goAddLine(): void {
     this.router.navigate(['/line-item-create'], {
-      queryParams: { r: this.id } // passes ?r=###
+      queryParams: { r: this.id } // sends request id
     });
   }
-
-  /* ---------------- helpers ------------------ */
 
   private refreshRequest(): void {
     this.reqSvc.getById(this.id).subscribe({
       next: (updatedRequest) => {
-        this.request = updatedRequest; // ✅ Update the local request object
+        this.request = updatedRequest; //Update the local request object
         console.log('Request refreshed:', this.request);
       },
       error: (err) => console.error('Error refreshing request:', err)

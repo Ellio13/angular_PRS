@@ -1,2 +1,9 @@
 <app-menu></app-menu>
+
+<ng-container *ngIf="isLoggedIn()">
+  <div class="welcome-container">
+    <h4>Welcome, {{ getUsername() }}</h4>
+  </div>
+</ng-container>
+
 <router-outlet></router-outlet>
