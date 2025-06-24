@@ -113,7 +113,7 @@ export class AuthService {
     if (!user.reviewer && !user.admin && action ==='viewRequests') {
       return false;
     }
-    // Regular users can only perform actions in the allowed list
+    // Regular users can only perform actions in the defined list
     if (!user.reviewer && !user.admin) {
       if (this.adminOnlyActions.includes(action)) {
         return false;
@@ -131,7 +131,7 @@ export class AuthService {
     const user = this.getCurrentUser();
     return user ? (user.reviewer || user.admin) : false;
   }
-
+//changes true/false login state observable based on current user
   updateLoginState(): void {
     this.loginStateSubject.next(this.isLoggedIn());
   }

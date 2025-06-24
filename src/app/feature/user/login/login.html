@@ -1,9 +1,5 @@
 <div class="login-container">
   <div class="login-box">
-    <div class="login-header">
-      <h2>Welcome Back</h2>
-      <p>Please enter your credentials to access your account</p>
-    </div>
     <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" class="login-form">
       <div class="form-group">
         <label for="username">
@@ -32,9 +28,8 @@
         {{ errorMessage }}
       </div>
 
-      <button type="submit" [disabled]="loading">
-        <span *ngIf="!loading">Login</span>
-        <span *ngIf="loading">Loading...</span>
+      <button type="submit" style="border-radius: 8px;">
+        Login
       </button>
     </form>
   </div>

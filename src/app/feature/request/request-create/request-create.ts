@@ -41,13 +41,26 @@ export class RequestCreate implements OnInit, OnDestroy {
     }
   }
 
- addRequest() {
-  // Transform to the structure your backend expects
-  const requestToSend = {
-    description: this.newRequest.description,
-    justification: this.newRequest.justification,
-    dateNeeded: this.newRequest.dateNeeded,
-    deliveryMode: this.newRequest.deliveryMode,
+  cancelRequest() {
+    this.router.navigateByUrl('/request-list');
+  }
+
+  addRequest() {
+    // Check if any required field is empty
+    if (!this.newRequest.description || 
+        !this.newRequest.justification || 
+        !this.newRequest.dateNeeded || 
+        !this.newRequest.deliveryMode) {
+      console.log("Form must have all fields");
+      return;
+    }
+
+    // Transform to the structure your backend expects
+    const requestToSend = {
+      description: this.newRequest.description,
+      justification: this.newRequest.justification,
+      dateNeeded: this.newRequest.dateNeeded,
+      deliveryMode: this.newRequest.deliveryMode,
     userId: this.newRequest.user.id  // Send just the user ID
   };
   

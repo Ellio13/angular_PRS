@@ -27,18 +27,33 @@ export class VendorCreate implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-addVendor() {
-  console.log("Submitting new vendor:", this.newVendor);
+  cancel() {
+    this.router.navigateByUrl('/vendor-list');
+  }
 
-  this.subscription = this.vendorSvc.add(this.newVendor).subscribe({
-    next: () => {
-      this.router.navigateByUrl('/vendor-list');
-    },
-    error: (err) => {
-      console.log("Error adding vendor", err);
+  addVendor() {
+    console.log("Submitting new vendor:", this.newVendor);
+
+    // Check if any required field is empty
+    if (!this.newVendor.code || 
+        !this.newVendor.name || 
+        !this.newVendor.address || 
+        !this.newVendor.city || 
+        !this.newVendor.state || 
+        !this.newVendor.zip || 
+        !this.newVendor.phoneNumber || 
+        !this.newVendor.email) {
+      console.log("Form must have all fields");
+      return;
     }
-  });
-}
-}
 
-
+    this.subscription = this.vendorSvc.add(this.newVendor).subscribe({
+      next: () => {
+        this.router.navigateByUrl('/vendor-list');
+      },
+      error: (err) => {
+        console.log("Error adding vendor", err);
+      }
+    });
+  }
+}

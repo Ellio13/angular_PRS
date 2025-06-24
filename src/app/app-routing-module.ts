@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 // Module that defines all routes in the application
 // Handles navigation between different components and features
 
+import { HomeComponent } from './feature/home/home.component';
 import { UserLogin } from './feature/user/login/login';
 import { UserList } from './feature/user/user-list/user-list';
 import { UserCreate } from './feature/user/user-create/user-create';
@@ -38,6 +39,7 @@ import { AuthGuard } from './service/auth-guard';
 const routes: Routes = [
   // Public routes that don't require authentication
   { path: 'login', component: UserLogin },
+  { path: 'home', component: HomeComponent },  // Home route
 
   // Protected routes that require authentication
   {

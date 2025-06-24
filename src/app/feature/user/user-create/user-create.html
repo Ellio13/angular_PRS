@@ -1,59 +1,63 @@
 
 <div class="p-4">
   <h1>{{ title }}</h1>
-  <table>
-    <tr>
-      <td>username:</td>
-      <td>
-        <input [(ngModel)]="newUser.username" type="text" />
-      </td>
-    </tr>
-    <tr>
-      <td>password:</td>
-      <td>
-        <input [(ngModel)]="newUser.password" type="text" />
-      </td>
-    </tr>
-    
-    <tr>
-      <td>First name:</td>
-      <td>
-        <input [(ngModel)]="newUser.firstName" type="text" />
-      </td>
-    </tr>
-        <tr>
-      <td>Last name:</td>
-      <td>
-        <input [(ngModel)]="newUser.lastName" type="text" />
-      </td>
-    </tr>
-    <tr>
-      <td>Phone number:</td>
-      <td>
-        <input [(ngModel)]="newUser.phoneNumber" type="number" />
-      </td>
-    </tr>
+  <form #userForm="ngForm" (ngSubmit)="addUser()">
+    <div class="form-errors" *ngIf="userForm.submitted && !userForm.valid">
+      <div class="error-message">Please fill in all required fields</div>
+    </div>
+    <table>
       <tr>
-      <td>Email:</td>
-      <td>
-        <input [(ngModel)]="newUser.email" type="email" />
-      </td>
-    </tr>
-    <tr>
-      <td>Reviewer:</td>
-      <td>
-        <input [(ngModel)]="newUser.reviewer" type="checkbox" />
-      </td>
-    </tr>
-    <tr>
-      <td>Admin:</td>
-      <td>
-        <input [(ngModel)]="newUser.admin" type="checkbox" />
-      </td>
-    </tr>
-  </table>
-  <div class="button-container">
-    <button (click)="addUser()" style="border-radius: 8px;">Add User</button>
-    <button routerLink="/user-list" style="margin-left: 15px; border-radius: 8px;">Cancel</button>
-  </div>
+        <td>username:</td>
+        <td>
+          <input [(ngModel)]="newUser.username" name="username" required />
+        </td>
+      </tr>
+      <tr>
+        <td>password:</td>
+        <td>
+          <input [(ngModel)]="newUser.password" name="password" type="password" required />
+        </td>
+      </tr>
+      <tr>
+        <td>First Name:</td>
+        <td>
+          <input [(ngModel)]="newUser.firstName" name="firstName" required />
+        </td>
+      </tr>
+      <tr>
+        <td>Last Name:</td>
+        <td>
+          <input [(ngModel)]="newUser.lastName" name="lastName" required />
+        </td>
+      </tr>
+      <tr>
+        <td>Phone number:</td>
+        <td>
+          <input [(ngModel)]="newUser.phoneNumber" type="number" required />
+        </td>
+      </tr>
+      <tr>
+        <td>Email:</td>
+        <td>
+          <input [(ngModel)]="newUser.email" type="email" required />
+        </td>
+      </tr>
+      <tr>
+        <td>Reviewer:</td>
+        <td>
+          <input [(ngModel)]="newUser.reviewer" type="checkbox" />
+        </td>
+      </tr>
+      <tr>
+        <td>Admin:</td>
+        <td>
+          <input [(ngModel)]="newUser.admin" type="checkbox" />
+        </td>
+      </tr>
+    </table>
+    <div class="button-container">
+      <button type="submit" style="border-radius: 8px;">Add User</button>
+      <button type="button" (click)="cancelUser()" style="margin-left: 15px; border-radius: 8px;">Cancel</button>  
+    </div>
+  </form>
 </div>

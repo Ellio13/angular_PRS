@@ -1,13 +1,18 @@
-<p>{{ title }}</p>
-
-<table>
+<div class="p-4">
+  <h1>{{ title }}</h1>
+  <form #productForm="ngForm" (ngSubmit)="addProduct()">
+    <div class="form-errors" *ngIf="productForm.submitted && !productForm.valid">
+      <div class="error-message">Please fill in all required fields</div>
+    </div>
+    <table>
   <!-- Vendor dropdown -->
   <tr>
     <td>Vendor:</td>
     <td>
-      <select [(ngModel)]="newProduct.vendorId" class="rounded">
+      <select [(ngModel)]="newProduct.vendorId" name="vendorId" required>
+        <option value="">Select a vendor</option>
         <option *ngFor="let v of vendors" [value]="v.id">
-          {{ v.id }} – {{ v.name }}
+          {{ v.id }} - {{ v.name }}
         </option>
       </select>
     </td>
@@ -17,7 +22,7 @@
   <tr>
     <td>Part Number:</td>
     <td>
-      <input [(ngModel)]="newProduct.partNumber" type="text" />
+      <input [(ngModel)]="newProduct.partNumber" name="partNumber" type="text" required />
     </td>
   </tr>
 
@@ -25,7 +30,7 @@
   <tr>
     <td>Name:</td>
     <td>
-      <input [(ngModel)]="newProduct.name" type="text" />
+      <input [(ngModel)]="newProduct.name" name="name" type="text" required />
     </td>
   </tr>
 
@@ -33,7 +38,7 @@
   <tr>
     <td>Price:</td>
     <td>
-      <input [(ngModel)]="newProduct.price" type="number" step="0.01" />
+      <input [(ngModel)]="newProduct.price" name="price" type="number" step="0.01" required />
     </td>
   </tr>
 
@@ -41,10 +46,13 @@
   <tr>
     <td>Unit:</td>
     <td>
-      <input [(ngModel)]="newProduct.unit" type="text" />
+      <input [(ngModel)]="newProduct.unit" name="unit" type="text" required />
     </td>
   </tr>
 </table>
-
-<button (click)="addProduct()" style="border-radius: 8px;">Add Product</button>
-<button routerLink="/product-list" style="margin-left: 15px; border-radius: 8px;">Cancel</button>
+  <div class="button-container">
+    <button type="submit" style="border-radius: 8px;">Add Product</button>
+    <button type="button" (click)="cancelProduct()" style="margin-left: 15px; border-radius: 8px;">Cancel</button>
+  </div>
+  </form>
+</div>

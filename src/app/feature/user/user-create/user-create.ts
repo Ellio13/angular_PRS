@@ -4,6 +4,7 @@ import { User } from '../../../model/user';
 import { UserService } from '../../../service/user-service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-user-create',
   standalone: false,
@@ -15,28 +16,42 @@ export class UserCreate implements OnInit, OnDestroy {
   subscription!: Subscription;
   newUser: User = new User();
 
-  constructor(private userSvc: UserService,
-  private router: Router) {}
+  constructor(private userSvc: UserService, private router: Router) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
-addUser() {
-  console.log("Submitting new user:", this.newUser);  // ✅ Now runs before the request
+  addUser() {
+    console.log("Submitting new user:", this.newUser);
 
-  this.subscription = this.userSvc.add(this.newUser).subscribe({
-    next: () => {
-      this.router.navigateByUrl('/user-list');
-    },
-    error: (err) => {
-      console.log("Error adding user", err);
+    // Check if any required field is empty
+    if (!this.newUser.username || 
+        !this.newUser.password || 
+        !this.newUser.firstName || 
+        !this.newUser.lastName || 
+        !this.newUser.phoneNumber || 
+        !this.newUser.email) {
+          console.log("Form must have all fields");
+          return;
     }
-  });
-}
-}
 
+    this.subscription = this.userSvc.add(this.newUser).subscribe({
+      next: () => {
+        this.router.navigateByUrl('/user-list');
+      },
+      error: (err) => {
+        console.log("Error adding user", err);
+      }
+    });
+  }
 
+  cancelUser() {
+    console.log("Canceling user create");
+    this.router.navigateByUrl('/user-list');
+  }
+}

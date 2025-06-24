@@ -16,7 +16,6 @@ export class UserLogin implements OnInit {
   username: string = '';
   password: string = '';
   errorMessage: string = '';
-  loading: boolean = false;
 
   constructor(
     private router: Router,
@@ -36,7 +35,6 @@ export class UserLogin implements OnInit {
       return;
     }
 
-    this.loading = true;
     this.errorMessage = '';
     
     console.log('Login attempt:', { username: this.username, password: '***' });
@@ -44,15 +42,13 @@ export class UserLogin implements OnInit {
     this.subscription = this.authService.login(this.username, this.password).subscribe({
       next: (user) => {
         console.log('Login successful:', user);
-        this.loading = false;  // Reset loading state
         // The auth service will handle storing the user and updating state
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
         form.reset();
       },
       error: (error) => {
-        this.loading = false;  // Reset loading state
         console.error('Login error details:', error);
-    this.errorMessage = 'Invalid login - incorrect user/password combo';
+        this.errorMessage = 'Invalid login - incorrect user/password combo';
       }
     });
   }
@@ -63,7 +59,7 @@ export class UserLogin implements OnInit {
     }
   }
 
-  // Helper method to clear fields
+  // clears fields
   clearForm(): void {
     this.username = '';
     this.password = '';

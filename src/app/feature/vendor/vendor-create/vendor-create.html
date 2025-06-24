@@ -1,58 +1,62 @@
-
 <div class="p-4">
   <h1>{{ title }}</h1>
-  <table>
-    <tr>
-      <td>code:</td>
-      <td>
-        <input [(ngModel)]="newVendor.code" type="text" />
-      </td>
-    </tr>
-    <tr>
-      <td>name:</td>
-      <td>
-        <input [(ngModel)]="newVendor.name" type="text" />
-      </td>
-    </tr>
-    
-    <tr>
-      <td>address:</td>
-      <td>
-        <input [(ngModel)]="newVendor.address" type="text" />
-      </td>
-    </tr>
-    <tr>
-      <td>city</td>
-      <td>
-        <input [(ngModel)]="newVendor.city" type="text" />
-      </td>
-    </tr>
-    <tr>
-      <td>state:</td>
-      <td>
-        <input [(ngModel)]="newVendor.state" type="text" />
-      </td>
-    </tr>
-        <tr>
-      <td>zip:</td>
-      <td>
-        <input [(ngModel)]="newVendor.zip" type="text" />
-      </td>
-    </tr>
-        <tr>
-      <td>phone:</td>
-      <td>
-        <input [(ngModel)]="newVendor.phoneNumber" type="text" />
-      </td>
-    </tr>
+  <form #vendorForm="ngForm" (ngSubmit)="addVendor()">
+    <div class="form-errors" *ngIf="vendorForm.submitted && !vendorForm.valid">
+      <div class="error-message">Please fill in all required fields</div>
+    </div>
+    <table>
       <tr>
-      <td>Email:</td>
-      <td>
-        <input [(ngModel)]="newVendor.email" type="email" />
-      </td>
-    </tr>
- 
-  </table>
-  <button (click)="addVendor()" style="border-radius: 8px;">Add Vendor</button>
-  <button routerLink="/vendor-list" style="margin-left: 15px; border-radius: 8px;">Cancel</button>
+        <td>code:</td>
+        <td>
+          <input [(ngModel)]="newVendor.code" name="code" type="text" required />
+        </td>
+      </tr>
+      <tr>
+        <td>name:</td>
+        <td>
+          <input [(ngModel)]="newVendor.name" name="name" type="text" required />
+        </td>
+      </tr>
+      <tr>
+        <td>address:</td>
+        <td>
+          <input [(ngModel)]="newVendor.address" name="address" type="text" required />
+        </td>
+      </tr>
+      <tr>
+        <td>city:</td>
+        <td>
+          <input [(ngModel)]="newVendor.city" name="city" type="text" required />
+        </td>
+      </tr>
+      <tr>
+        <td>state:</td>
+        <td>
+          <input [(ngModel)]="newVendor.state" name="state" type="text" required />
+        </td>
+      </tr>
+      <tr>
+        <td>zip:</td>
+        <td>
+          <input [(ngModel)]="newVendor.zip" name="zip" type="text" required />
+        </td>
+      </tr>
+      <tr>
+        <td>phone:</td>
+        <td>
+          <input [(ngModel)]="newVendor.phoneNumber" name="phoneNumber" type="text" required />
+        </td>
+      </tr>
+      <tr>
+        <td>Email:</td>
+        <td>
+          <input [(ngModel)]="newVendor.email" name="email" type="email" required />
+        </td>
+      </tr>
+    </table>
+    <div class="button-container">
+      <button type="submit" style="border-radius: 8px;">Add Vendor</button>
+      <button type="button" (click)="cancel()" style="margin-left: 15px; border-radius: 8px;">Cancel</button>
+    </div>
+  </form>
 </div>
