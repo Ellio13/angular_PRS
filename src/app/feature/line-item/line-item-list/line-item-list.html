@@ -4,12 +4,7 @@
     
 <div class="p-4">
   <section class="heading centered" *ngIf="isAdmin">
-    <div class="add-request-container">
-      <span class="add-request-text">Add Line Item</span>
-      <a routerLink="/line-item-create">
-        <img width="20" height="20" src="add-icon.png" title="Add New" style="margin-left: 10px;" />
-      </a>
-    </div>
+
   </section>
   <table *ngIf="lineItems" class="table table-hover">
     <thead>

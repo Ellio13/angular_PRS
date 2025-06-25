@@ -33,10 +33,9 @@ export class LineItemCreate implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Check if request ID was passed in URL
-    const requestIdParam = this.route.snapshot.queryParamMap.get('r');
-    if (requestIdParam) {
-      this.lineItem.requestId = +requestIdParam;
+    const requestId = this.route.snapshot.params['requestId'];
+    if (requestId) {
+      this.lineItem.requestId = +requestId;
       this.requestLocked = true;
     }
 
@@ -72,18 +71,8 @@ export class LineItemCreate implements OnInit, OnDestroy {
     this.lineItemSvc.add(dto).subscribe({
       next: (resp) => {
         console.log('Line item created:', resp);
-
-        // Submit the request for review after line item is saved
-        this.requestSvc.submitForReview(dto.requestId).subscribe({
-          next: (reviewedRequest) => {
-            console.log('Request submitted for review:', reviewedRequest);
-            this.router.navigate(['/request-lines', dto.requestId]);
-          },
-          error: (err) => {
-            console.error('Failed to submit request for review', err);
-            this.router.navigate(['/request-lines', dto.requestId]); // still redirect even if review fails
-          }
-        });
+      
+        this.router.navigate(['/request-lines', dto.requestId]);
       },
       error: (err) => {
         console.log('Error creating line item', err);

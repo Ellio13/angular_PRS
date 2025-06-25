@@ -1,4 +1,3 @@
-
 <div class="p-4">
   <h1>{{ title }}</h1>
   <form #userForm="ngForm" (ngSubmit)="addUser()">
@@ -33,25 +32,25 @@
       <tr>
         <td>Phone number:</td>
         <td>
-          <input [(ngModel)]="newUser.phoneNumber" type="number" required />
+          <input [(ngModel)]="newUser.phoneNumber" name="phoneNumber" type="number" required />
         </td>
       </tr>
       <tr>
         <td>Email:</td>
         <td>
-          <input [(ngModel)]="newUser.email" type="email" required />
+          <input [(ngModel)]="newUser.email" name="email" type="email" required />
         </td>
       </tr>
       <tr>
         <td>Reviewer:</td>
         <td>
-          <input [(ngModel)]="newUser.reviewer" type="checkbox" />
+          <input [(ngModel)]="newUser.reviewer" name="reviewer" type="checkbox" />
         </td>
       </tr>
       <tr>
         <td>Admin:</td>
         <td>
-          <input [(ngModel)]="newUser.admin" type="checkbox" />
+          <input [(ngModel)]="newUser.admin" name="admin" type="checkbox" />
         </td>
       </tr>
     </table>

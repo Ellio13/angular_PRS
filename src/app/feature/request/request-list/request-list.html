@@ -10,7 +10,7 @@
       </a>
     </div>
   </section>
-  <table *ngIf="requests && currentUser?.admin" class="table table-hover">
+  <table *ngIf="requests" class="table table-hover">
     <thead>
       <th>Id</th>
       <th>User</th>
@@ -39,16 +39,16 @@
         <td>{{ r.submittedDate }}</td>
         <td>{{ r.reasonForRejection }}</td>
         <td>
-          <a routerLink="/request-edit/{{r.id}}">
+          <a routerLink="/request-edit/{{r.id}}" *ngIf="r.status !== 'APPROVED' && r.status !== 'REJECTED'">
             <img src="/pencil-icon.png" width="20" height="20" title="Edit Request" />
-          </a> |
-          <a>
+          </a>
+          <a *ngIf="isCurrentUserAdmin || (r.status !== 'APPROVED' && r.status !== 'REJECTED')">
             <i class="bi bi-trash3" style="cursor: pointer;" title="Delete Request" (click)="delete(r.id)"></i>
-          </a> |
+          </a>
           <a routerLink="/request-detail/{{r.id}}">
             <img src="/details.png" width="20" height="20" title="Request Details" />
-          </a> |
-          <a routerLink="/request-lines/{{r.id}}">
+          </a>
+          <a routerLink="/request-lines/{{r.id}}" *ngIf="r.status !== 'APPROVED' && r.status !== 'REJECTED'">
             <img src="/lines.png" width="20" height="20" title="Request Lines" />
           </a>
         </td>

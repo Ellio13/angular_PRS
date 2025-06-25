@@ -20,7 +20,7 @@ export class Request {
         justification: string='',
         dateNeeded: Date = new Date(),
         deliveryMode: string='',
-        status: string='NEW',
+        status: string='NEW',  // Default status is NEW until explicitly changed
         total: number=0,
         submittedDate: Date = new Date(),
         reasonForRejection: string=''

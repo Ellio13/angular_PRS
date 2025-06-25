@@ -29,15 +29,19 @@ export class UserCreate implements OnInit, OnDestroy {
   addUser() {
     console.log("Submitting new user:", this.newUser);
 
-    // Check if any required field is empty
-    if (!this.newUser.username || 
-        !this.newUser.password || 
-        !this.newUser.firstName || 
-        !this.newUser.lastName || 
-        !this.newUser.phoneNumber || 
-        !this.newUser.email) {
-          console.log("Form must have all fields");
-          return;
+    // Check if all required string fields are filled
+    const requiredFields = [
+      this.newUser.username,
+      this.newUser.password,
+      this.newUser.firstName,
+      this.newUser.lastName,
+      this.newUser.phoneNumber,
+      this.newUser.email
+    ];
+    
+    if (requiredFields.some(field => !field)) {
+      console.log("All required fields must be filled");
+      return;
     }
 
     this.subscription = this.userSvc.add(this.newUser).subscribe({

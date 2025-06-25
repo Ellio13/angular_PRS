@@ -24,9 +24,7 @@ export class LineItemService {
   }
 
   add(dto: LineItemDTO): Observable<LineItem> {
-    if (!this.authService.hasPermission('addLineItem')) {
-      return throwError(() => new Error('Insufficient permissions to add line item'));
-    }
+    // Allow all authenticated users to add line items
     return this.http.post<LineItem>(URL, dto);   // POST /api/lineitems
   }
 
@@ -38,17 +36,13 @@ export class LineItemService {
   }
 
   delete(id: number): Observable<LineItem> {
-    if (!this.authService.hasPermission('deleteLineItem')) {
-      return throwError(() => new Error('Insufficient permissions to delete line item'));
-    }
+    // Allow all authenticated users to delete line items
     return this.http.delete<LineItem>(URL + '/' + id);  // DELETE /api/lineitems/7
   }
 
   //returns array of line items
   linesForRequest(reqId: number): Observable<LineItem[]> {
-    if (!this.authService.hasPermission('listLineItems')) {
-      return throwError(() => new Error('Insufficient permissions to view line items'));
-    }
+    // Allow all authenticated users to view line items
     return this.http.get<LineItem[]>(URL + '/lines-for-request/' + reqId);
   // /api/lines-for-request/20  --this number is the request ID
   }

@@ -49,18 +49,24 @@ export class RequestEdit implements OnInit, OnDestroy {
   }
 
   save() {
+    // Create a proper Request object with all required fields
     const requestToSave = {
       id: this.request.id,
+      user: this.request.user,
+      requestNumber: this.request.requestNumber,
       description: this.request.description,
       justification: this.request.justification,
-      dateNeeded: this.request.dateNeeded,
+      dateNeeded: new Date(this.request.dateNeeded),
       deliveryMode: this.request.deliveryMode,
-      userId: this.request.user.id
-    };
+      status: this.request.status,
+      total: this.request.total,
+      submittedDate: this.request.submittedDate,
+      reasonForRejection: this.request.reasonForRejection
+    } as Request;
 
     console.log('Sending to backend:', requestToSave);
 
-    this.requestSvc.update(requestToSave as any).subscribe({
+    this.requestSvc.update(requestToSave).subscribe({
       next: (resp) => {
         console.log('Save successful:', resp);
         this.router.navigateByUrl('/request-list');

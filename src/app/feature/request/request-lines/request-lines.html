@@ -1,5 +1,5 @@
 
-<h4>Request {{ request.id }} – Line Items</h4>
+<h4 *ngIf="request">Request {{ request.id }} – Line Items</h4>
 
 <table class="table table-sm w-auto mb-3" *ngIf="request">
   <tr><th>User</th><td>{{ request.user.firstName }} {{request.user.lastName}}</td></tr>
@@ -11,21 +11,25 @@
 <section class="d-flex align-items-center mb-2">
   <span class="fw-bold">Line Items</span>
   <img src="/add-icon.png" width="20" height="20" class="ms-auto"
-       title="Add Line Item" style="cursor:pointer" (click)="goAddLine()" />
+       title="Add Line Item" style="cursor:pointer" 
+       *ngIf="request.status !== 'APPROVED' && request.status !== 'REJECTED'"
+       (click)="goAddLine()" />
 </section>
 
 <table *ngIf="lineItems.length; else empty" class="table table-striped table-hover">
   <thead>
-    <th>ID</th><th>Product</th><th>Qty</th><th></th>
+    <th>ID</th><th>Product</th><th>Price</th><th>Quantity</th><th>Line Total</th>
   </thead>
   <tr *ngFor="let li of lineItems">
     <td>{{ li.id }}</td>
-    <td>{{ li.productId }}</td>
+    <td>{{ li.product?.name }}</td>
+    <td>{{li.product?.price}}</td>
     <td>{{ li.quantity }}</td>
-    <td>
+    <td>{{ (li.quantity * (li.product?.price || 0)) | currency }}</td>    <td>
       <i class="bi bi-trash3" width="18" height="18"
-           style="cursor:pointer" title="Delete"
-           (click)="deleteLine(li.id)"></i>
+            style="cursor:pointer" title="Delete"
+            *ngIf="request.status !== 'APPROVED' && request.status !== 'REJECTED'"
+            (click)="deleteLine(li.id)"></i>
     </td>
   </tr>
 </table>
@@ -34,5 +38,7 @@
   <p class="fst-italic">— no line items yet —</p>
 </ng-template>
 
-<button class="btn btn-primary mt-3" (click)="submitRequest()">Submit Request for Review</button>
+<button class="btn btn-primary mt-3" 
+           *ngIf="request.status !== 'APPROVED' && request.status !== 'REJECTED'"
+           (click)="submitRequest()">Submit Request for Review</button>
 

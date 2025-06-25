@@ -7,6 +7,7 @@ import { LineItem } from '../../../model/line-item';
 
 import { RequestService } from '../../../service/request-service';
 import { LineItemService } from '../../../service/line-item-service';
+import { ProductService } from '../../../service/product-service';
 
 @Component({
   selector: 'app-request-lines',
@@ -17,16 +18,24 @@ import { LineItemService } from '../../../service/line-item-service';
 export class RequestLines implements OnInit, OnDestroy {
   request!: Request;
   lineItems: LineItem[] = [];
+  isSubmitted: boolean = false;  // Add this flag to track submission status
 
   private id!: number;
   private sub?: Subscription;
+product: any;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private reqSvc: RequestService,
-    private liSvc: LineItemService
-  ) {}
+    private liSvc: LineItemService,
+    private productSvc: ProductService
+  ) {
+    this.request = {
+      ...this.request,
+      status: 'NEW'  // Ensure status starts as NEW
+    };
+  }
 
 
   ngOnInit(): void {
@@ -69,8 +78,28 @@ export class RequestLines implements OnInit, OnDestroy {
   }
 
   goAddLine(): void {
-    this.router.navigate(['/line-item-create'], {
-      queryParams: { r: this.id } // sends request id
+    this.router.navigate(['/line-item-create', this.id]); // sends request id as route parameter
+  }
+
+  updateRequestTotal(): void {
+    // Calculate new total
+    const total = this.lineItems.reduce((sum, item) => {
+      return sum + (item.product?.price || 0) * item.quantity;
+    }, 0);
+
+    // Update request total
+    this.reqSvc.getById(this.id).subscribe({
+      next: (request) => {
+        // Only update total, preserve existing status
+        request.total = total;
+        // Create a copy of the request to prevent status changes
+        const updatedRequest = { ...request, total };
+        this.reqSvc.update(updatedRequest).subscribe({
+          next: () => this.refreshRequest(),
+          error: (err) => console.error('Error updating request total:', err)
+        });
+      },
+      error: (err) => console.error('Error getting request:', err)
     });
   }
 
@@ -91,17 +120,18 @@ export class RequestLines implements OnInit, OnDestroy {
     });
   }
 
-submitRequest(): void {
-  this.reqSvc.submitForReview(this.id).subscribe({
-    next: (updatedRequest) => {
-      this.request = updatedRequest;
-      console.log('Request submitted for review:', updatedRequest);
-      alert(`Request submitted! Status: ${updatedRequest.status}`);
-    },
-    error: (err) => {
-      console.error('Error submitting request:', err);
-      alert('Error submitting request');
-    }
-  });
-}
+  submitRequest(): void {
+    this.reqSvc.submitForReview(this.id).subscribe({
+      next: (updatedRequest) => {
+        this.request = updatedRequest;
+        this.isSubmitted = true;  // Set flag when request is submitted
+        console.log('Request submitted for review:', updatedRequest);
+        alert(`Request submitted! Status: ${updatedRequest.status}`);
+      },
+      error: (err) => {
+        console.error('Error submitting request:', err);
+        alert('Error submitting request');
+      }
+    });
+  }
 }

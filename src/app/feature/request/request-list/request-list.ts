@@ -1,6 +1,7 @@
 import { Request } from '../../../model/request';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { RequestService } from '../../../service/request-service';
 import { AuthService } from '../../../service/auth-service';
 
@@ -15,6 +16,7 @@ export class RequestList implements OnInit, OnDestroy {
   subscription!: Subscription;
   requests: Request[] = [];
   isReviewer: boolean = false;
+  isCurrentUserAdmin: boolean = false;
   currentUser: any;
 
   constructor(
@@ -26,6 +28,7 @@ export class RequestList implements OnInit, OnDestroy {
     const user = this.authService.getCurrentUser();
     this.currentUser = user;
     this.isReviewer = !!(user && (user.reviewer === true || user.admin === true));
+    this.isCurrentUserAdmin = !!(user && user.admin === true);
     this.refreshRequests();
   }
 
@@ -37,11 +40,15 @@ export class RequestList implements OnInit, OnDestroy {
     const user = this.authService.getCurrentUser();
     let requests$;
 
-    if (user && user.reviewer === true) {
-      requests$ = this.requestSvc.listByStatusAndRole('REVIEW', 'REVIEWER');
-    } else {
-      requests$ = this.requestSvc.list();
-    }
+    requests$ = this.requestSvc.list().pipe(
+      map((requests: Request[]) => {
+        // If user is not admin, filter to show only their requests
+        if (user && !this.authService.isAdmin()) {
+          return requests.filter((req: Request) => req.user.id === user.id);
+        }
+        return requests;
+      })
+    );
 
     this.subscription = requests$.subscribe({
       next: (resp) => {

@@ -1,33 +1,40 @@
-
 <div class="p-4">
   <span class="component-title">{{ title }}</span>
   <p *ngIf="!product">Loading...</p>
   <div *ngIf="product">
     <main class="single">
       <table class="table table-sm">
-<tr>
+        <tr>
           <td>Part Number:</td>
           <td>
             <input [(ngModel)]="product.partNumber" class="rounded" type="text" />
           </td>
-          </tr>
-          <tr>
+        </tr>
+        <tr>
           <td>Name:</td>
           <td>
             <input [(ngModel)]="product.name" class="rounded" type="text" />
           </td>
-          </tr>
-          <tr>
+        </tr>
+        <tr>
           <td>Price:</td>
           <td>
             <input [(ngModel)]="product.price" class="rounded" type="text" />
-         
           </td>
         </tr>
         <tr>
           <td>Unit:</td>
           <td>
             <input [(ngModel)]="product.unit" class="rounded" type="text" />
+          </td>
+        </tr>
+        <tr>
+          <td>Vendor:</td>
+          <td>
+            <select [(ngModel)]="product.vendorId" name="vendorId" class="rounded" required>
+              <option [ngValue]="null" disabled>Select a vendor</option>
+              <option *ngFor="let v of vendors" [ngValue]="v.id">{{ v.name }}</option>
+            </select>
           </td>
         </tr>
       </table>

@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-// Module that defines all routes in the application
-// Handles navigation between different components and features
-
+// Component imports
 import { HomeComponent } from './feature/home/home.component';
 import { UserLogin } from './feature/user/login/login';
 import { UserList } from './feature/user/user-list/user-list';
@@ -37,33 +35,30 @@ import { NotFound } from './core/not-found/not-found';
 import { AuthGuard } from './service/auth-guard';
 
 const routes: Routes = [
-  // Public routes that don't require authentication
+  // Public routes
   { path: 'login', component: UserLogin },
-  { path: 'home', component: HomeComponent },  // Home route
+  { path: 'home', component: HomeComponent },
 
-  // Protected routes that require authentication
+  // Protected routes
   {
     path: '',
-    canActivate: [AuthGuard],  // Ensures user is logged in before accessing these routes
+    canActivate: [AuthGuard],
     children: [
       { path: 'user-list', component: UserList },
       { path: 'user-create', component: UserCreate },
       { path: 'user-edit/:id', component: UserEdit },
       { path: 'user-detail/:id', component: UserDetail },
 
-      // Vendor management routes (admin only)
       { path: 'vendor-list', component: VendorList },
       { path: 'vendor-create', component: VendorCreate },
       { path: 'vendor-edit/:id', component: VendorEdit },
       { path: 'vendor-detail/:id', component: VendorDetail },
 
-      // Product management routes (admin only)
       { path: 'product-list', component: ProductList },
       { path: 'product-create', component: ProductCreate },
       { path: 'product-edit/:id', component: ProductEdit },
       { path: 'product-detail/:id', component: ProductDetail },
 
-      // Request management routes
       { path: 'request-list', component: RequestList },
       { path: 'request-create', component: RequestCreate },
       { path: 'request-edit/:id', component: RequestEdit },
@@ -71,9 +66,8 @@ const routes: Routes = [
       { path: 'request-lines/:id', component: RequestLines },
       { path: 'request-review', component: RequestReview },
 
-      // Line Item management routes
       { path: 'line-item-list', component: LineItemList },
-      { path: 'line-item-create', component: LineItemCreate },
+      { path: 'line-item-create/:requestId', component: LineItemCreate }, // <-- Updated route
       { path: 'line-item-edit/:id', component: LineItemEdit },
       { path: 'line-item-detail/:id', component: LineItemDetail },
     ]

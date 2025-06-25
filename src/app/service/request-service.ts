@@ -25,7 +25,18 @@ export class RequestService {
   // Get requests filtered by status and user role
   // Used for displaying requests specific to user's role
   listByStatusAndRole(status: string, role: string): Observable<Request[]> {
-    return this.http.get<Request[]>(`${URL}?status=${status}&role=${role}`);
+    const user = this.authService.getCurrentUser();
+    let params = new URLSearchParams();
+
+    if (role === 'USER') {
+      // For regular users, filter by their own requests
+      params.append('userId', user?.id.toString() || '');
+    } else if (role === 'REVIEWER') {
+      // For reviewers, filter by REVIEW status
+      params.append('status', 'REVIEW');
+    }
+
+    return this.http.get<Request[]>(`${URL}?${params.toString()}`);
   }
 
   // Create a new request
@@ -35,10 +46,10 @@ export class RequestService {
   }
 
   // Update an existing request
-  // Only admins have permission to modify requests
+  // Users can edit their own requests, admins can edit any request
   update(request: Request): Observable<Request> {
-    const user = this.authService.getCurrentUser();
-    if (!user?.admin) {
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser?.admin && request.user.id !== currentUser?.id) {
       return throwError(() => new Error('Insufficient permissions to update request'));
     }
     return this.http.put<Request>(URL + '/' + request.id, request);
@@ -73,9 +84,7 @@ export class RequestService {
   }
  
   submitForReview(id: number): Observable<Request> {
-    if (!this.authService.hasPermission('submitForReview')) {
-      return throwError(() => new Error('Insufficient permissions to submit for review'));
-    }
+    // Allow all authenticated users to submit requests for review
     return this.http.put<Request>(`${URL}/submit-review/${id}`, null);
   }
 

@@ -6,7 +6,6 @@
     </a>
 
     <div class="menu-items">
-      <!-- Show menu links if logged in -->
       <ng-container *ngIf="isLoggedIn()">
         <a *ngFor="let mi of menuItems"
            [routerLink]="mi.href"
@@ -16,7 +15,7 @@
           {{ mi.display }}
         </a>
       </ng-container>
-      <!-- Only show logout button when logged in -->
+
       <button *ngIf="isLoggedIn()"
               class="btn btn-outline-light rounded-3 logout-btn"
               (click)="logout()">

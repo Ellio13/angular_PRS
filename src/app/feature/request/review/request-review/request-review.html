@@ -2,16 +2,17 @@
   <section class="heading">
     <span class="page-title font-weight-bold">Review Requests</span>
   </section>
+
   <div *ngIf="authService.isReviewerOrAdmin(); else notAuthorized">
     <table class="table table-hover">
       <thead>
         <tr>
-          <th style="width: 50px; min-width: 0; white-space: nowrap;">Id</th>
-          <th style="width: 100px; min-width: 0; white-space: nowrap;">User</th>
-          <th style="width: 200px; min-width: 0; white-space: nowrap;">Description</th>
-          <th style="width: 100px; min-width: 0; white-space: nowrap;">Total</th>
-          <th style="width: 100px; min-width: 0; white-space: nowrap;">Status</th>
-          <th style="width: 150px; min-width: 0; white-space: nowrap;">Actions</th>
+          <th>Id</th>
+          <th>User</th>
+          <th>Description</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -22,16 +23,20 @@
           <td>{{ r.total }}</td>
           <td>{{ r.status }}</td>
           <td>
-            <i class="bi bi-hand-thumbs-up-fill" *ngIf="r.status === 'REVIEW' && isReviewer && r.user.id !== currentUser?.id" 
-            (click)="approve(r.id)" title="APPROVE"
-            style="cursor: pointer;margin-right:20px"></i>
-            <i class="bi bi-x-square-fill" *ngIf="r.status === 'REVIEW' && isReviewer && r.user.id !== currentUser?.id" 
-            (click)="reject(r.id)" title="REJECT"></i>
+            <i class="bi bi-hand-thumbs-up-fill"
+               *ngIf="r.status === 'REVIEW' && isReviewer && r.user.id !== currentUser?.id"
+               (click)="approve(r.id)" title="APPROVE"
+               style="cursor: pointer; margin-right: 20px;"></i>
+            <i class="bi bi-x-square-fill"
+               *ngIf="r.status === 'REVIEW' && isReviewer && r.user.id !== currentUser?.id"
+               (click)="reject(r.id)" title="REJECT"
+               style="cursor: pointer;"></i>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+
   <ng-template #notAuthorized>
     <p>You are not authorized to view this page.</p>
   </ng-template>

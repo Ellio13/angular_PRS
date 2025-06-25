@@ -1,50 +1,46 @@
 <div class="p-4">
   <h1>{{ title }}</h1>
-  <form #requestForm="ngForm" (ngSubmit)="addRequest()">
+  <form #requestForm="ngForm" (ngSubmit)="addRequest()" novalidate>
     <div class="form-errors" *ngIf="requestForm.submitted && !requestForm.valid">
       <div class="error-message">Please fill in all required fields</div>
     </div>
     <table>
-    <tr>
-      <td>User ID:</td>
-      <td>
-        <span>{{ newRequest.user.id }}</span>
-      </td>
-    </tr>
-    <tr>
-      <td>Description</td>
-      <td>
-        <input [(ngModel)]="newRequest.description" name="description" type="text" required />
-      </td>
-    </tr>
-    
-    <tr>
-      <td>Justification:</td>
-      <td>
-        <input [(ngModel)]="newRequest.justification" name="justification" type="text" required />
-      </td>
-    </tr>
-        <tr>
-      <td>Date Needed:</td>
-      <td>
-        <input [(ngModel)]="newRequest.dateNeeded" name="dateNeeded" type="date" required />
-      </td>
-    </tr>
- <tr>
-  <td>Delivery Mode:</td>
-  <td>
-    <select [(ngModel)]="newRequest.deliveryMode" name="deliveryMode" class="form-control" required>
-      <option value="">Select Delivery Mode</option>
-      <option value="mail">Mail</option>
-      <option value="pickup">Pickup</option>
-    </select>
-  </td>
-</tr>
-    
-  </table>
-  <div class="button-container">
-    <button type="submit" style="border-radius: 8px;">Add Request</button>
-    <button type="button" (click)="cancelRequest()" style="margin-left: 15px; border-radius: 8px;">Cancel</button>
-  </div>
+      <tr>
+        <td>User ID:</td>
+        <td><span>{{ newRequest.user?.id }}</span></td>
+      </tr>
+      <tr>
+        <td>Description:</td>
+        <td>
+          <input [(ngModel)]="newRequest.description" name="description" type="text" required />
+        </td>
+      </tr>
+      <tr>
+        <td>Justification:</td>
+        <td>
+          <input [(ngModel)]="newRequest.justification" name="justification" type="text" required />
+        </td>
+      </tr>
+      <tr>
+        <td>Date Needed:</td>
+        <td>
+          <input [(ngModel)]="newRequest.dateNeeded" name="dateNeeded" type="date" required />
+        </td>
+      </tr>
+      <tr>
+        <td>Delivery Mode:</td>
+        <td>
+          <select [(ngModel)]="newRequest.deliveryMode" name="deliveryMode" required>
+            <option value="" disabled>Select Delivery Mode</option>
+            <option value="mail">Mail</option>
+            <option value="pickup">Pickup</option>
+          </select>
+        </td>
+      </tr>
+    </table>
+    <div class="button-container">
+      <button type="submit" style="border-radius: 8px;">Add Request</button>
+      <button type="button" (click)="cancelRequest()" style="margin-left: 15px; border-radius: 8px;">Cancel</button>
+    </div>
   </form>
 </div>
