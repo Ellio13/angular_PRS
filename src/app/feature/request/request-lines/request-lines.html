@@ -38,7 +38,10 @@
   <p class="fst-italic">— no line items yet —</p>
 </ng-template>
 
-<button class="btn btn-primary mt-3" 
+<div class="d-flex gap-2 mt-3">
+  <button class="btn btn-primary" 
            *ngIf="request.status !== 'APPROVED' && request.status !== 'REJECTED'"
            (click)="submitRequest()">Submit Request for Review</button>
+  <a routerLink="/request-list" class="btn btn-secondary">Back to List</a>
+</div>
 

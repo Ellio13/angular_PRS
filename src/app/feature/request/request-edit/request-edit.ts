@@ -73,7 +73,7 @@ export class RequestEdit implements OnInit, OnDestroy {
       },
       error: (err) => {
         console.error('Error saving request:', err);
-        alert('Failed to save request. Please try again.');
+        alert('Cannot edit request.');
       }
     });
   }

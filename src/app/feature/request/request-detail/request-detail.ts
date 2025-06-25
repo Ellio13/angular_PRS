@@ -39,17 +39,7 @@ request!: Request;
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-  }
-
-  delete() {
-    this.requestSvc.delete(this.requestId).subscribe({
-      next: (resp) => {
-        this.router.navigateByUrl('/request-list');
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    });
+  
   }
 }
 

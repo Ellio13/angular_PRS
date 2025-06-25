@@ -61,13 +61,11 @@ export class RequestService {
 
   // Delete a request
   // Only admins have permission to delete requests
-  delete(id: number): Observable<Request> {
-    const user = this.authService.getCurrentUser();
-    if (!user?.admin) {
-      return throwError(() => new Error('Insufficient permissions to delete request'));
-    }
+  delete(id: number, request?: Request): Observable<Request> {
     return this.http.delete<Request>(URL + '/' + id);
   }
+  
+  
 
   approveRequest(id: number): Observable<Request> {
     if (!this.authService.canApproveRejectRequests()) {

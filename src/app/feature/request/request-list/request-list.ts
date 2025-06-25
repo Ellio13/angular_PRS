@@ -62,24 +62,21 @@ export class RequestList implements OnInit, OnDestroy {
   }
 
   delete(id: number): void {
-    this.subscription = this.requestSvc.delete(id).subscribe({
-      next: () => {
-        // Refresh the request list after delete
-        this.subscription = this.requestSvc.list().subscribe({
-          next: (resp) => {
-            this.requests = resp;
-          },
-          error: (err: any) => {
-            console.log("Error refreshing request list", err);
-          }
-        });
-      },
+    const request = this.requests.find(r => r.id === id);
+    if (!request) {
+      alert('Request not found.');
+      return;
+    }
+  
+    this.subscription = this.requestSvc.delete(id, request).subscribe({
+      next: () => this.refreshRequests(),
       error: (err: any) => {
-        console.log('Error deleting request for id: ' + id);
-        alert('Error deleting request for id: ' + id);
+        console.error('Error deleting request:', err);
+        alert(err?.message || 'Unable to delete request.');
       }
     });
   }
+  
 
   approve(id: number): void {
     this.subscription = this.requestSvc.approveRequest(id).subscribe({
