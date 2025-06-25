@@ -1,59 +1,64 @@
-# PrsNg
+# Purchase Request System (PRS) - Angular & TypeScript
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.2.
+The **Purchase Request System (PRS)** allows employees to submit purchase requests for products needed in their work. Similar to an e-commerce cart, users can add products to their request, then submit it for approval.
 
-## Development server
+A user with **admin** privileges has full access to the database.  A user with **reviewer** privileges can view all submitted requests and approve or reject them after review.  A **user** with no extra privileges can create and manage their own requests, but cannot view or modify requests submitted by others.
 
-To start a local development server, run:
+The system supports full **CRUD** functionality for all main data models.
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Overview
 
-## Code scaffolding
+The PRS project is built using the Angular framework with TypeScript and communicates with a RESTful backend API.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Key Technical Features
 
-```bash
-ng generate component component-name
-```
+1. **Single Page Application (SPA)**: Built using Angular routing and component-based architecture.
+2. **Consistent UI/UX**: Maintains a uniform and responsive design.
+3. **Modular Codebase**: Follows best practices, coding standards, and object model conventions.
+4. **GitHub Deployment**: Project is version-controlled and published to GitHub.
+5. **Adheres to Object Model**: Design is based on object-oriented principles, ensuring clear relationships between entities.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## Structure
 
-## Building
+### Core Entities:
 
-To build the project run:
+* `User`: Represents employees (with or without reviewer/admin roles).
+* `Request`: A purchase request containing metadata and total.
+* `Product`: The items available for purchase.
+* `LineItem`: Represents a quantity of a selected product in a request.
 
-```bash
-ng build
-```
+### Component Structure (Angular):
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+* `request-list`
+* `request-create`
+* `request-edit`
+* `request-lines`
+* `line-item-create`
+* `line-item-edit`
+* `user-login`
 
-## Running unit tests
+---
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Features and Functionality
 
-```bash
-ng test
-```
+### CRUD Operations
 
-## Running end-to-end tests
+Each of the main models supports:
 
-For end-to-end (e2e) testing, run:
+* **Get All** records
+* **Get By ID**
+* **Insert** (Create)
+* **Update**
+* **Delete**
 
-```bash
-ng e2e
-```
+### Additional Requirements
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+* Submit request for review
+* Approve or reject requests (reviewer only)
+* Dynamic calculation of request total based on line items
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
